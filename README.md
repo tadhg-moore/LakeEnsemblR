@@ -42,22 +42,22 @@ setwd('example/feeagh') # Change working directory to example folder
 masterConfigFile <- 'Feeagh_master_config.yaml'
 
 # 1. Example - creates directories with all model setup
-export_config(config_file = masterConfigFile, model = c('FLake', 'GLM', 'GOTM', 'Simstrat'), folder = '.')
+export_config(config_file = masterConfigFile, model = c('GLM', 'GOTM', 'Simstrat'), folder = '.')
 
 # 2. Create meteo driver files
-export_meteo(masterConfigFile, model = c('FLake', 'GLM', 'GOTM', 'Simstrat'),
+export_meteo(masterConfigFile, model = c('GLM', 'GOTM', 'Simstrat'),
              meteo_file = 'LakeEnsemblR_meteo_standard.csv')
 
 # 3. Create initial conditions
 start_date <- get_yaml_value(file = masterConfigFile, label =  "time", key = "start")
 
-export_init_cond(model = c('FLake', 'GLM', 'GOTM', 'Simstrat'),
+export_init_cond(model = c('GLM', 'GOTM', 'Simstrat'),
                  wtemp_file = 'LakeEnsemblR_wtemp_profile_standard.csv',
                  date = start_date, btm_depth = NULL,
                  month = 1, ndeps = 2, print = TRUE)
 
 # 4. Run ensemble lake models
-wtemp_list <- run_ensemble(config_file = masterConfigFile, model = c('FLake', 'GLM', 'GOTM', 'Simstrat'), return_list = TRUE,
+wtemp_list <- run_ensemble(config_file = masterConfigFile, model = c('GLM', 'GOTM', 'Simstrat'), return_list = TRUE,
                            create_netcdf = TRUE, obs_file = 'LakeEnsemblR_wtemp_profile_standard.csv')
 
 ```
@@ -113,7 +113,7 @@ df # Print parameter ranges
 run_LHC(parRange = df, num = 300,
 obs_file = 'LakeEnsemblR_wtemp_profile_standard.csv',
 param_file = NULL,
-config_file = 'Feeagh_master_config.yaml', model = c('FLake', 'GLM', 'GOTM', 'Simstrat'),
+config_file = 'Feeagh_master_config.yaml', model = c('GLM', 'GOTM', 'Simstrat'),
 meteo_file = 'LakeEnsemblR_meteo_standard.csv')
 
 ```
@@ -127,7 +127,7 @@ master_param_file <- sample_LHC(parRange = df, num = 300) # Create parameter fil
 
 # Select the number of cores to use and opens sockets
 num_cores <- detectCores()
-model = c('FLake', 'GLM', 'GOTM', 'Simstrat')
+model = c('GLM', 'GOTM', 'Simstrat')
 if (length(model) < num_cores){
   cl <- makeCluster(length(model), outfile = 'calib_log.txt')
 } else {
