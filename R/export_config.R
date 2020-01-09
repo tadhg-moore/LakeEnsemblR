@@ -42,10 +42,16 @@ export_config <- function(config_file, model = c('GOTM', 'GLM', 'Simstrat', 'FLa
   lat <- get_yaml_value(config_file, "location", "latitude")
   # Longitude
   lon <- get_yaml_value(config_file, "location", "longitude")
+  # Elevation
+  elev <- get_yaml_value(config_file, "location", "elevation")
   # Maximum Depth
-  max_depth = get_yaml_value(config_file, "location", "depth")
+  max_depth <- get_yaml_value(config_file, "location", "depth")
+  # Initial Depth
+  init_depth <- get_yaml_value(config_file, "location", "init_depth")
+  # Hypsograph file
+  hyp_file <- get_yaml_value(config_file, "location", "hypsograph")
   # Read in hypsograph data
-  hyp <- read.csv(get_yaml_value(config_file, "location", "hypsograph"))
+  hyp <- read.csv(hyp_file)
   # Start date
   start_date <- get_yaml_value(config_file, "time", "start")
   # Stop date
@@ -64,6 +70,17 @@ export_config <- function(config_file, model = c('GOTM', 'GLM', 'Simstrat', 'FLa
   use_inflows <- get_yaml_value(config_file, "inflows", "use")
   # Output
   out_tstep <- get_yaml_value(config_file, "output", "time_step")
+
+  # Check max depth against hypsograph
+  if(max(hyp[,1]) != max_depth){
+    warning('Maximum depth in ', hyp_file, ' [',max(hyp[,1]), '] ', 'is not equal to depth in ', config_file, ' [',max_depth,']\nConsider changing value in ', config_file, ' to match max depth in ', hyp_file)
+  }
+
+  # Correct hypsograph for initial depth
+  message('Correcting hypsograph to init_depth ', init_depth, 'm')
+  hyp[,1] <- hyp[,1] - init_depth
+
+
 
 
   if("FLake" %in% model){
@@ -91,12 +108,13 @@ export_config <- function(config_file, model = c('GOTM', 'GLM', 'Simstrat', 'FLa
     # Calculate mean depth from hypsograph (mdepth = V / SA)
     # Calculate volume from hypsograph - converted to function?
     ## Needs to be double checked!
-    bthA = hyp$Area_meterSquared
-    bthD = hyp$Depth_meter
+    fla_hyp <- hyp[hyp$Depth_meter <=0,]
+    bthA = fla_hyp$Area_meterSquared
+    bthD = fla_hyp$Depth_meter
     top = min(bthD)
     bottom = max(bthD)
     layerD <- seq(top, bottom, 0.1)
-    layerA <- stats::approx(bthD, bthA, layerD)$y
+    layerA <- approx(bthD, bthA, layerD)$y
     vols <- c()
     for(i in 2:length(layerD)){
       h = layerD[i] - layerD[i-1]
@@ -128,6 +146,8 @@ export_config <- function(config_file, model = c('GOTM', 'GLM', 'Simstrat', 'FLa
 
     # Read the GLM config file from config_file, and write it to the GLM directory
     temp_fil <- get_yaml_value(config_file, "config_files", "glm_config")
+    bsn_len <- get_yaml_value(config_file, "config_files", "bsn_len")
+    bsn_wid <- get_yaml_value(config_file, "config_files", "bsn_wid")
 
     if(file.exists(temp_fil)){
       glm_nml <- temp_fil
@@ -140,28 +160,46 @@ export_config <- function(config_file, model = c('GOTM', 'GLM', 'Simstrat', 'FLa
 
     # Format hypsograph
     glm_hyp <- hyp
-    glm_hyp[,1] <- glm_hyp[nrow(glm_hyp),1] - glm_hyp[,1] # this doesn't take into account GLM's lake elevation
+    # glm_hyp[,1] <- glm_hyp[1,1] - glm_hyp[,1]
+    glm_hyp[,1] <- elev + glm_hyp[,1] # Accounting for elevation
+
+    if(bsn_len == 'NULL' | bsn_wid == 'NULL'){
+      # Calculate basin dims assume ellipse with width is twice the length
+      Ao <- max(glm_hyp[,2])
+      bsn_wid = sqrt((2*Ao)/pi)
+      bsn_len = 2*bsn_wid
+    }
+
+
 
     # Read in nml and input parameters
-    nml <- glmtools::read_nml(glm_nml)
+    nml <- read_nml(glm_nml)
+
+    # Calculate max number of layers
+    min_layer_thick <- get_nml_value(nml, 'min_layer_thick')
+    max_layers <- round(max_depth/min_layer_thick)
+
     inp_list <- list('lake_name' = get_yaml_value(config_file, "location", "name"),
                      'latitude' = lat,
                      'longitude' = lon,
-                     'lake_depth' = max_depth,
+                     'lake_depth' = init_depth,
+                     'max_layers' = max_layers,
                      'Kw' = Kw,
-                     'crest_elev' = max(-(glm_hyp[,1])),
+                     'crest_elev' = max((glm_hyp[,1])),
                      'bsn_vals'=length(glm_hyp[,1]) ,
-                     'H' = -(glm_hyp[,1]),
+                     'H' = rev(glm_hyp[,1]),
                      'A' = rev(glm_hyp[,2] ),
                      'start' = start_date,
                      'stop' = stop_date,
-                     'dt' = timestep, # Hard-code: When choosing dt = 86400, GLM only gives daily output when dt = 3600? (Jorrit, 2019-12-15)
+                     'dt' = timestep,
+                     'bsn_len' = bsn_len,
+                     'bsn_wid' = bsn_wid,
                      'nsave' = out_tstep,
                      'out_dir' = 'output',
                      'out_fn' = 'output',
                      'timefmt' = 2)
-    nml <- glmtools::set_nml(nml, arg_list = inp_list)
-    glmtools::write_nml(nml, glm_nml)
+    nml <- set_nml(nml, arg_list = inp_list)
+    write_nml(nml, glm_nml)
 
 
     message('GLM configuration complete!')
@@ -206,7 +244,8 @@ export_config <- function(config_file, model = c('GOTM', 'GLM', 'Simstrat', 'FLa
     # Create GOTM hypsograph file
     ndeps <- nrow(hyp)
     got_hyp <- hyp
-    got_hyp[,1] <- -got_hyp[,1]
+    # got_hyp[,1] <- max(got_hyp[,1]) - got_hyp[,1]
+    # got_hyp[,1] <- -got_hyp[,1]
     colnames(got_hyp) <- c(as.character(ndeps), '2')
     write.table(got_hyp, 'GOTM/hypsograph.dat', quote = FALSE, sep = '\t', row.names = FALSE, col.names = TRUE)
     input_yaml(got_yaml, 'location', 'hypsograph', "hypsograph.dat")
@@ -264,7 +303,8 @@ export_config <- function(config_file, model = c('GOTM', 'GLM', 'Simstrat', 'FLa
 
     # Create Simstrat bathymetry
     sim_hyp <- hyp
-    sim_hyp[,1] <- -sim_hyp[,1]
+    # sim_hyp[,1] <- max(sim_hyp[,1]) - sim_hyp[,1]
+    # sim_hyp[,1] <- -sim_hyp[,1]
     colnames(sim_hyp) <- c('Depth [m]',	'Area [m^2]')
     write.table(sim_hyp, 'Simstrat/hypsograph.dat', quote = FALSE, sep = '\t', row.names = FALSE, col.names = TRUE)
 

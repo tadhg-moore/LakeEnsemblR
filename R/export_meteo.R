@@ -31,6 +31,7 @@ export_meteo <- function(config_file, model = c('GOTM', 'GLM', 'Simstrat', 'FLak
   # Function to be added to gotmtools
   lat <- get_yaml_value(file = yaml, label = 'location', key = 'latitude')
   lon <- get_yaml_value(file = yaml, label = 'location', key = 'longitude')
+  elev <- get_yaml_value(file = yaml, label = 'location', key = 'elevation')
 
 
   ### Import data
@@ -129,7 +130,7 @@ export_meteo <- function(config_file, model = c('GOTM', 'GLM', 'Simstrat', 'FLak
                                                            relh = fla_met$Relative_Humidity_percent,
                                                            swr = fla_met$Shortwave_Radiation_Downwelling_wattPerMeterSquared,
                                                            lat = lat, lon = lon,
-                                                           elev = 14, # Needs to be added dynamically
+                                                           elev = elev, # Needs to be added dynamically
                                                            daily = daily)
 
     }
@@ -222,7 +223,7 @@ export_meteo <- function(config_file, model = c('GOTM', 'GLM', 'Simstrat', 'FLak
       # Function from gotmtools
 
       met_got$Cloud_Cover_decimalFraction <- calc_cc(date = met_got$datetime, airt = met_got$Air_Temperature_celsius, relh = met_got$Relative_Humidity_percent, swr = met_got$Shortwave_Radiation_Downwelling_wattPerMeterSquared, lat = lat, lon = lon,
-                                                                elev = 14, # Needs to be dynamically added
+                                                                elev = elev, # Needs to be dynamically added
                                                                 daily = daily)
     }
 

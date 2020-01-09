@@ -9,8 +9,8 @@
 /
 &mixing
    surface_mixing = 1
-   coef_mix_conv = 0.2
-   coef_wind_stir = 0.402
+   coef_mix_conv = 0.125
+   coef_wind_stir = 0.23
    coef_mix_shear = 0.2
    coef_mix_turb = 0.51
    coef_mix_KH = 0.3
@@ -76,7 +76,7 @@
    subdaily = .false.
    meteo_fl = 'meteo_file.csv'
    wind_factor = 1
-   sw_factor = 1.08
+   sw_factor = 1
    lw_factor = 1
    at_factor = 1
    rh_factor = 1
@@ -86,6 +86,11 @@
    cd = 0.0013
    rain_threshold = 0.01
    runoff_coef = 0.3
+/
+&snowice
+   snow_albedo_factor = 1
+   snow_rho_max = 300
+   snow_rho_min = 50
 /
 &bird_model
    AP = 973
@@ -126,15 +131,15 @@
    crest_width = 100
    crest_factor = 0.61
 /
-&sediment
-   sed_heat_Ksoil = 2
-   sed_temp_depth = 0.2
-   sed_temp_mean = 4.5, 5, 6
-   sed_temp_amplitude = 1, 1, 1
-   sed_temp_peak_doy = 242, 242, 242
-   benthic_mode = 2
-   n_zones = 3
-   zone_heights = 10, 20, 30
-   sed_reflectivity = 0.1, 0.01, 0.01
-   sed_roughness = 0.1, 0.01, 0.01
-/
+!&sediment
+!   sed_heat_Ksoil = 2
+!   sed_temp_depth = 0.2
+!   sed_temp_mean = 4.5, 5, 6
+!   sed_temp_amplitude = 1, 1, 1
+!   sed_temp_peak_doy = 242, 242, 242
+!   benthic_mode = 2
+!   n_zones = 2
+!   zone_heights = 10, 20, 30
+!   sed_reflectivity = 0.1, 0.01, 0.01
+!   sed_roughness = 0.1, 0.01, 0.01
+!/

@@ -53,7 +53,7 @@ start_date <- get_yaml_value(file = masterConfigFile, label =  "time", key = "st
 
 export_init_cond(model = c('FLake', 'GLM', 'GOTM', 'Simstrat'),
                  wtemp_file = 'LakeEnsemblR_wtemp_profile_standard.csv',
-                 date = start_date, tprof_file = 'HOLDER.dat',
+                 date = start_date, btm_depth = NULL,
                  month = 1, ndeps = 2, print = TRUE)
 
 # 4. Run ensemble lake models
@@ -91,8 +91,7 @@ for(i in 1:(length(vars)-1)){
 }
 
 # Plot all model simulations
-# install.packages('ggpubr')
-g1 <- ggpubr::ggarrange(plotlist = plist, ncol = 1, common.legend = TRUE, legend = 'right')
+g1 <- ggarrange(plotlist = plist, ncol = 1, common.legend = TRUE, legend = 'right')
 g1
 ggsave('output/model_ensemble_watertemp.png', g1,  dpi = 300,width = 384,height = 300, units = 'mm')
 

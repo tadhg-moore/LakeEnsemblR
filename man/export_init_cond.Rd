@@ -8,7 +8,6 @@ export_init_cond(
   model = c("GOTM", "GLM", "Simstrat", "FLake"),
   wtemp_file,
   date,
-  tprof_file,
   month = NULL,
   ndeps = 2,
   btm_depth = NULL,
@@ -23,13 +22,11 @@ export_init_cond(
 
 \item{date}{character; Date in "YYYY-mm-dd HH:MM:SS" format to extract the initial profile. If using month, the date to which to set the start date}
 
-\item{tprof_file}{filepath; For the new initial temperature profile file.}
-
 \item{month}{numeric;select a month if you want to use an 'average profile from a particular month. Defaults to NULL.}
 
 \item{ndeps}{numeric; number of depths to extract from the monthly average profile. Defaults to 2 (surface and bottom)}
 
-\item{btm_depth}{numeric; Depth to extract the bottom temperature from, must be negative. If none provided uses the max depth in the observed file. Defaults to NULL}
+\item{btm_depth}{numeric; Depth to extract the bottom temperature from, must be positive. If none provided uses the max depth in the observed file. Defaults to NULL}
 
 \item{print}{logical; Prints the temperature profile to the console}
 
