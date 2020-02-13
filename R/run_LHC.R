@@ -121,6 +121,11 @@ run_LHC <- function(config_file, num = NULL, param_file = NULL, method, model = 
   message('Loading met data...')
   met = read.csv(file.path(folder, meteo_file), stringsAsFactors = F)
   message('Finished!')
+
+  # Subset met data
+  # met <- met[met$datetime >= start & met$datetime <= stop,]
+
+
   met[,1] <- as.POSIXct(met[,1])
   # Check time step
   tstep <- diff(as.numeric(met[,1]))
@@ -412,8 +417,8 @@ run_LHC <- function(config_file, num = NULL, param_file = NULL, method, model = 
     reference_year <- get_json_value(par_fpath, "Simulation", "Start year")
 
     # Set times
-    reference_year <- year(as.POSIXct(start))
-    input_json(par_fpath, "Simulation", "Start year", reference_year)
+    # reference_year <- year(as.POSIXct(start))
+    # input_json(par_fpath, "Simulation", "Start year", reference_year)
     start_date_simulation <- as.POSIXct(start, format = '%Y-%m-%d %H:%M:%S', tz = tz)
     end_date_simulation <- as.POSIXct(stop, format = '%Y-%m-%d %H:%M:%S', tz = tz)
     input_json(par_fpath, "Simulation", "Start d", as.numeric(difftime(start_date_simulation, as.POSIXct(paste0(reference_year,"-01-01")), units = "days")))

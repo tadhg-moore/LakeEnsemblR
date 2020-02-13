@@ -108,6 +108,7 @@ export_meteo <- function(config_file, model = c('GOTM', 'GLM', 'Simstrat', 'FLak
   if(!relative_humidity & air_temperature & dewpoint_temperature){
     # The function is in helpers.R the formula is from the weathermetrics package
     met[[colname_relative_humidity]] <- dewt2relh(met[[colname_dewpoint_temperature]], met[[colname_air_temperature]])
+    relative_humidity <- TRUE
     if(is.na(sum(met[[colname_relative_humidity]]))){
       met[[colname_relative_humidity]] <- na.approx(met[[colname_relative_humidity]])
       message('Interpolated NAs')
@@ -162,8 +163,10 @@ export_meteo <- function(config_file, model = c('GOTM', 'GLM', 'Simstrat', 'FLak
   # Long-wave radiation
   if(!longwave_radiation & dewpoint_temperature){
     met[[colname_longwave_radiation]] <- calc_in_lwr(cc = met[[colname_cloud_cover]], airt = met[[colname_air_temperature]], dewt = met[[colname_dewpoint_temperature]])
+    longwave_radiation <- TRUE
   }else if(!longwave_radiation & !dewpoint_temperature & relative_humidity){
     met[[colname_longwave_radiation]] <- calc_in_lwr(cc = met[[colname_cloud_cover]], airt = met[[colname_air_temperature]], relh = met[[colname_relative_humidity]])
+    longwave_radiation <- TRUE
   }
 
   # wind speed
