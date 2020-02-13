@@ -76,7 +76,7 @@ analyse_ncdf <- function(ncdf, spin_up = NULL){
     df <- merge(obs, temp, by = c(1,2))
     df <- na.exclude(df)
 
-    if(length(ice_vars) > 1){
+    if(length(ice_vars) > 0){
       i_var <- grep(model, ice_vars, value = TRUE)
       if(length(i_var) == 0){
         i_var <- NULL
@@ -89,12 +89,16 @@ analyse_ncdf <- function(ncdf, spin_up = NULL){
           ice[,2] <- 0
         }
       }
+    }else{
+      i_var <- NULL
     }
 
     if(!is.null(spin_up)){
       spin_date <- obs[1,1] + spin_up*(24*60*60)
       temp <- temp[temp[,1] >= spin_date,]
-      ice <- ice[ice[,1] >= spin_date,]
+      if(!is.null(i_var)){
+        ice <- ice[ice[,1] >= spin_date,]
+      }
     }
 
     if(!is.null(i_var)){
