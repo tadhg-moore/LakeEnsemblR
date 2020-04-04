@@ -22,8 +22,8 @@ warnings_are_errors: false
 r_github_packages:
   - GLEON/GLM3r
   - hdugan/glmtools
-  - aemon-j/FLakeR
-  - aemon-j/GOTMr
+  - aemon-j/FLakeR@inflow
+  - aemon-j/GOTMr@lake
   - aemon-j/gotmtools
   - aemon-j/SimstratR
   - aemon-j/MyLakeR
