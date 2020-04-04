@@ -5,6 +5,9 @@
 
 language: r
 cache: packages
+
+os: linux
+dist: bionic
 sudo: true
 
 repos:
