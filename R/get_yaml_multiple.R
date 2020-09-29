@@ -19,11 +19,11 @@
 
 get_yaml_multiple <- function(file = "gotm.yaml", ...){
   
-  yml <- readLines(file, warn = FALSE)
+  # yml <- readLines(file, warn = FALSE)
   yml <- configr::read.config(file)
   
   # Prevent from finding labels/keys in comments
-  yml_no_comments <- unname(sapply(yml, function(x) strsplit(x, "#")[[1]][1]))
+  # yml_no_comments <- unname(sapply(yml, function(x) strsplit(x, "#")[[1]][1]))
   
   # Users can provide multiple keys, named key1, key2, key3, etc.
   all_args <- list(...)
