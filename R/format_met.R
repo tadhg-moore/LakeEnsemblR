@@ -42,6 +42,11 @@ format_met <- function(met, model, config_file, folder = "."){
     }
     chck_met$relh <- TRUE
   }
+  if(sum(met[[l_names$relh]] <= 0) > 0) {
+    met[[l_names$relh]][met[[l_names$relh]] <= 0] <- 1
+    warning("Relative humidity values are < 0.
+Setting to 1. Consider inspecting '", meteo_file, "'")
+  }
 
   # Vapour pressure
   if(!chck_met$vap_p & chck_met$relh){
