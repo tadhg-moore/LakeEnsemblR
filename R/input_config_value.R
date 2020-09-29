@@ -10,6 +10,7 @@
 #'   defaults to overwriting file if not specified
 #' 
 #' @importFrom gotmtools input_yaml input_nml
+#' @importFrom glmtools read_nml set_nml write_nml
 #' 
 #' @examples
 #' \dontrun{
@@ -20,10 +21,14 @@
 #' @export
 
 input_config_value <- function(model, file, label, key, value, out_file = NULL){
-  if(model == "FLake" | model == "GLM"){
+  if(model == "FLake"){
     return(gotmtools::input_nml(file = file, label = label, key = key,
                                 value = value, out_file = out_file))
-  }else if(model == "GOTM"){
+  } else if(model == "GLM") {
+    nml <- glmtools::read_nml(nml_file = file)
+    nml <- glmtools::set_nml(nml, arg_name = key, arg_val = value)
+    return(glmtools::write_nml(nml, file))
+  } else if(model == "GOTM"){
     return(gotmtools::input_yaml(file = file, label = label, key = key,
                                  value = value, out_file = out_file))
   }else if(model == "Simstrat"){
