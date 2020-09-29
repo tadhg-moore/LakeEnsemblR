@@ -37,13 +37,13 @@ export_inflow <- function(config_file, model = c("GOTM", "GLM", "Simstrat", "FLa
 
 ##-------------Read settings---------------
   # Use inflows
-  use_inflows <- get_yaml_multiple(config_file, key1 = "inflows",
+  use_inflows <- LakeEnsemblR::get_yaml_multiple(config_file, key1 = "inflows",
                                                  key2 = "use")
   # Use counter outflows
-  use_outflows <- get_yaml_multiple(config_file, key1 = "inflows",
+  use_outflows <- LakeEnsemblR::get_yaml_multiple(config_file, key1 = "inflows",
                                     key2 = "mass-balance")
   # Get scaling parameter
-  scale_param <- get_yaml_multiple(config_file, key1 = "inflows",
+  scale_param <- LakeEnsemblR::get_yaml_multiple(config_file, key1 = "inflows",
                                     key2 = "scale_param")
 
   # Get start & stop dates
@@ -65,10 +65,11 @@ export_inflow <- function(config_file, model = c("GOTM", "GLM", "Simstrat", "FLa
 ##---------------GLM-------------
 
   if("GLM" %in% model){
-    glm_nml <- file.path(folder, get_yaml_value(config_file, "config_files", "GLM"))
+    glm_nml <- file.path(folder, gotmtools::get_yaml_value(config_file,
+                                                           "config_files", "GLM"))
 
     # Read in nml and input parameters
-    nml <- read_nml(glm_nml)
+    nml <- glmtools::read_nml(glm_nml)
 
     if(!use_inflows){
       inp_list <- list("num_inflows" = 0,
@@ -79,7 +80,7 @@ export_inflow <- function(config_file, model = c("GOTM", "GLM", "Simstrat", "FLa
     }
 
     nml <- glmtools::set_nml(nml, arg_list = inp_list)
-    write_nml(nml, glm_nml)
+    glmtools::write_nml(nml, glm_nml)
 
   }
 
@@ -186,7 +187,8 @@ export_inflow <- function(config_file, model = c("GOTM", "GLM", "Simstrat", "FLa
 
   if(use_inflows == TRUE){
 
-    inflow_file <- get_yaml_value(file = config_file, label = "inflows", key = "file")
+    inflow_file <- LakeEnsemblR::get_yaml_multiple(config_file, key1 = "inflows",
+                                                   key2 = "file")
     # Check if file exists
     if(!file.exists(inflow_file)){
       stop(inflow_file, " does not exist. Check filepath in ", config_file)
@@ -199,14 +201,14 @@ export_inflow <- function(config_file, model = c("GOTM", "GLM", "Simstrat", "FLa
     # Check time step
     tstep <- diff(as.numeric(inflow[, 1]))
 
-    start_date <- get_yaml_value(config_file, "time", "start")
+    start_date <- gotmtools::get_yaml_value(config_file, "time", "start")
     # Stop date
-    stop_date <- get_yaml_value(config_file, "time", "stop")
+    stop_date <- gotmtools::get_yaml_value(config_file, "time", "stop")
 
     inflow_start <- which(inflow$datetime == as.POSIXct(start_date))
     inflow_stop <- which(inflow$datetime == as.POSIXct(stop_date))
 
-    inflow <- inflow[inflow_start:inflow_stop, ]
+    inflow <- inflow[inflow_start:inflow_stop[1], ]
 
     ### Naming conventions standard input
     # test if names are right
@@ -223,7 +225,11 @@ export_inflow <- function(config_file, model = c("GOTM", "GLM", "Simstrat", "FLa
     }
     
     ### Apply scaling
-    inflow[["Flow_metersCubedPerSecond"]] <- inflow[["Flow_metersCubedPerSecond"]] * scale_param
+    if(!is.null(scale_param)) {
+      inflow[["Flow_metersCubedPerSecond"]] <- inflow[["Flow_metersCubedPerSecond"]] *
+        scale_param
+    }
+    
 
     # FLake
     #####
@@ -235,15 +241,9 @@ export_inflow <- function(config_file, model = c("GOTM", "GLM", "Simstrat", "FLa
 
       flake_outfpath <- file.path(folder, "FLake", flake_outfile)
 
-
-      #Scale met
-      if(!is.null(scale_param)){
-        scale_met(flake_inflow, pars = scale_param, model = "FLake", out_file = flake_outfpath)
-      }else{
-        # Write to file
-        write.table(flake_inflow, flake_outfpath, quote = FALSE, row.names = FALSE, sep = "\t",
+      # Write to file
+      write.table(flake_inflow, flake_outfpath, quote = FALSE, row.names = FALSE, sep = "\t",
                     col.names = FALSE)
-      }
 
       temp_fil <- get_yaml_value(config_file, "config_files", "FLake")
       input_nml(temp_fil, label = "inflow", key = "time_step_number", nrow(flake_inflow))
@@ -263,16 +263,12 @@ export_inflow <- function(config_file, model = c("GOTM", "GLM", "Simstrat", "FLa
 
       inflow_outfile <- file.path("GLM", "inflow_file.csv")
 
-      #Scale met
-      if(!is.null(scale_param)){
-        scale_met(glm_inflow, pars = scale_param, model = "GLM", out_file = inflow_outfile)
-      } else {
-        # Write to file
-        write.csv(glm_inflow, inflow_outfile, row.names = FALSE, quote = FALSE)
-      }
+      # Write to file
+      write.csv(glm_inflow, inflow_outfile, row.names = FALSE, quote = FALSE)
 
       # Input to nml file
-      nml_path <- file.path(folder, get_yaml_value(config_file, "config_files", "GLM"))
+      nml_path <- file.path(folder, gotmtools::get_yaml_value(config_file, "config_files",
+                                                              "GLM"))
       nml <- glmtools::read_nml(nml_path)
 
       nml_list <- list("inflow_fl" = "inflow_file.csv")
@@ -286,7 +282,7 @@ export_inflow <- function(config_file, model = c("GOTM", "GLM", "Simstrat", "FLa
         nml <- glmtools::set_nml(nml, arg_list = nml_list)
         glmtools::write_nml(nml, nml_path)
 
-        max_elv <- get_nml_value(nml, "H")
+        max_elv <- glmtools::get_nml_value(nml, "H")
         nml <- glmtools::set_nml(nml, arg_list = list("outl_elvs" = max(max_elv)))
         glmtools::write_nml(nml, nml_path)
 
@@ -310,14 +306,9 @@ export_inflow <- function(config_file, model = c("GOTM", "GLM", "Simstrat", "FLa
 
       gotm_inflow <- format_inflow(inflow, model = "GOTM", config_file = config_file)
 
-      #Scale met
-      if(!is.null(scale_param)){
-        scale_met(gotm_inflow, pars = scale_param, model = "GOTM", out_file = gotm_outfpath)
-      }else{
-        # Write to file
-        write.table(gotm_inflow, gotm_outfpath, quote = FALSE, row.names = FALSE, sep = "\t",
-                    col.names = TRUE)
-      }
+      # Write to file
+      write.table(gotm_inflow, gotm_outfpath, quote = FALSE, row.names = FALSE, sep = "\t",
+                  col.names = TRUE)
 
       message("GOTM: Created file ", file.path(folder, "GOTM", gotm_outfile))
 
