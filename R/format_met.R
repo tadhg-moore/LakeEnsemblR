@@ -13,9 +13,12 @@
 format_met <- function(met, model, config_file, folder = "."){
 
 
-  lat <- get_yaml_value(file = config_file, label = "location", key = "latitude")
-  lon <- get_yaml_value(file = config_file, label = "location", key = "longitude")
-  elev <- get_yaml_value(file = config_file, label = "location", key = "elevation")
+  lat <- gotmtools::get_yaml_value(file = file.path(folder, config_file),
+                        label = "location", key = "latitude")
+  lon <- gotmtools::get_yaml_value(file = file.path(folder, config_file),
+                                   label = "location", key = "longitude")
+  elev <- gotmtools::get_yaml_value(file = file.path(folder, config_file),
+                                    label = "location", key = "elevation")
 
   ### Check what met data is available, as this determines what model forcing option to use
   # (in the simstrat config file)

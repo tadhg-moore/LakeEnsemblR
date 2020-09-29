@@ -104,7 +104,8 @@ export_meteo <- function(config_file, model = c("GOTM", "GLM", "Simstrat", "FLak
   # GLM
   #####
   if("GLM" %in% model){
-    glm_met <- format_met(met = met, model = "GLM", config_file = config_file)
+    glm_met <- format_met(met = met, model = "GLM", config_file = config_file, 
+                          folder = folder)
 
     met_outfile <- file.path("GLM", "meteo_file.csv")
 
