@@ -37,17 +37,19 @@ export_inflow <- function(config_file, model = c("GOTM", "GLM", "Simstrat", "FLa
 
 ##-------------Read settings---------------
   # Use inflows
-  use_inflows <- get_yaml_value(config_file, "inflows", "use")
+  use_inflows <- get_yaml_multiple(config_file, key1 = "inflows",
+                                                 key2 = "use")
   # Use counter outflows
-  use_outflows <- get_yaml_value(config_file, "inflows", "mass-balance")
+  use_outflows <- get_yaml_multiple(config_file, key1 = "inflows",
+                                    key2 = "mass-balance")
+  # Get scaling parameter
+  scale_param <- get_yaml_multiple(config_file, key1 = "inflows",
+                                    key2 = "scale_param")
 
   # Get start & stop dates
-  start_date <- get_yaml_value(config_file, "time", "start")
-  stop_date <- get_yaml_value(config_file, "time", "stop")
+  start_date <- gotmtools::get_yaml_value(config_file, "time", "start")
+  stop_date <- gotmtools::get_yaml_value(config_file, "time", "stop")
   
-  # Get scaling parameter
-  scale_param <- get_yaml_value(config_file, "inflows", "scale_param")
-
 ##---------------FLake-------------
 
   if("FLake" %in% model){
