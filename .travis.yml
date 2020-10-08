@@ -10,9 +10,13 @@ sudo: true
 repos:
   CRAN: https://cran.rstudio.com
   
+#before_install:
+#  - sudo apt-get -qq update
+#  - sudo apt-get install -y libnetcdf-dev netcdf-bin netcdf-doc
+  
 before_install:
-  - sudo apt-get -qq update
-  - sudo apt-get install -y libnetcdf-dev netcdf-bin netcdf-doc
+  - if [ "$TRAVIS_OS_NAME" = "osx" ]; then brew update          ; fi
+  - if [ "$TRAVIS_OS_NAME" = "osx" ]; then brew install graphviz
 
 warnings_are_errors: false
 
@@ -27,7 +31,7 @@ after_success:
 
 r_github_packages:
   - cran/XML@3.99-0.3
-  - GLEON/GLM3r
+  - GLEON/GLM3r@GLMv.3.1.0a3
   - USGS-R/glmtools@ggplot_overhaul
   - aemon-j/FLakeR@inflow
   - aemon-j/GOTMr
@@ -49,5 +53,5 @@ notifications:
     on_failure: change
 
 os:
-  - linux
+  #- linux
   - osx
