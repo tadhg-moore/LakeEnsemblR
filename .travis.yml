@@ -15,7 +15,7 @@ repos:
 #  - sudo apt-get install -y libnetcdf-dev netcdf-bin netcdf-doc
   
 before_install:
-  - rm '/usr/local/bin/gfortran' ;fi
+  - rm '/usr/local/bin/gfortran' ; fi
   - if [ "$TRAVIS_OS_NAME" = "osx" ]; then brew update          ; fi
  # - if [ "$TRAVIS_OS_NAME" = "osx" ]; then brew upgrade netcdf ; fi
   - if [ "$TRAVIS_OS_NAME" = "osx" ]; then brew install gd ; fi
