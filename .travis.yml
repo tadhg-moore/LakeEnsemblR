@@ -33,7 +33,7 @@ after_success:
 
 r_github_packages:
   - cran/XML@3.99-0.3
-  - GLEON/GLM3r@GLMv.3.1.0a3
+  - tadhg-moore/GLM3r
   - USGS-R/glmtools@ggplot_overhaul
   - aemon-j/FLakeR@inflow
   - aemon-j/GOTMr
