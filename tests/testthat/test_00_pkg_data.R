@@ -146,9 +146,9 @@ test_that("can run MyLake", {
   # 1. Example - creates directories with all model setup
   export_config(config_file = config_file, model = model)
   
-  setwd("MyLake")
+  # setwd("MyLake")
   
-  MyLakeR::run_mylake(config_dat = "mylake.Rdata", init_dat = "mylake_init.Rdata")
+  MyLakeR::run_mylake(sim_folder = "MyLake", config_dat = "mylake.Rdata", init_dat = "mylake_init.Rdata")
   
   # testthat::expect_true((file.exists("output/ensemble_output.nc")))
   testthat::expect_true((file.exists("output/output.RData")))
