@@ -45,11 +45,12 @@ test_that("can run FLake", {
   # 1. Example - creates directories with all model setup
   export_config(config_file = config_file, model = model)
 
-  # 2. run models
-  run_ensemble(config_file = config_file,
-               model = model)
+  setwd("FLake")
+  
+  FLakeR::run_flake(verbose = TRUE)
+  
 
-  testthat::expect_true((file.exists("output/ensemble_output.nc")))
+  testthat::expect_true((file.exists("output/output.dat")))
 })
 
 #GLM
