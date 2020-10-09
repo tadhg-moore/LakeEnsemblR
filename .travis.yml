@@ -38,7 +38,7 @@ r_github_packages:
   - aemon-j/FLakeR@inflow
   - robertladwig/GOTMr
   - aemon-j/gotmtools
-  - aemon-j/SimstratR
+  - robertladwig/SimstratR
   - aemon-j/MyLakeR
 
 r:
