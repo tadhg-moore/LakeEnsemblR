@@ -143,6 +143,9 @@ test_that("can run MyLake", {
   config_file <- 'LakeEnsemblR.yaml'
   model <- c("MyLake")
   
+  # 1. Example - creates directories with all model setup
+  export_config(config_file = config_file, model = model)
+  
   setwd("MyLake")
   
   MyLakeR::run_mylake(config_dat = "mylake.Rdata", verbose = TRUE)
