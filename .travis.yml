@@ -35,7 +35,7 @@ r_github_packages:
   - cran/XML@3.99-0.3
   - tadhg-moore/GLM3r
   - USGS-R/glmtools@ggplot_overhaul
-  - tadhg-moore/FLakeR@inflow
+  - aemon-j/FLakeR@inflow
   - aemon-j/GOTMr
   - aemon-j/gotmtools
   - aemon-j/SimstratR
