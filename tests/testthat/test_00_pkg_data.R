@@ -148,7 +148,7 @@ test_that("can run MyLake", {
   
   setwd("MyLake")
   
-  MyLakeR::run_mylake(config_dat = "mylake.Rdata", verbose = TRUE)
+  MyLakeR::run_mylake(config_dat = "mylake.Rdata", init_dat = "mylake_init.Rdata")
   
   # testthat::expect_true((file.exists("output/ensemble_output.nc")))
   testthat::expect_true((file.exists("output/output.RData")))
