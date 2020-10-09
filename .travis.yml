@@ -36,7 +36,7 @@ r_github_packages:
   - tadhg-moore/GLM3r
   - USGS-R/glmtools@ggplot_overhaul
   - aemon-j/FLakeR@inflow
-  - aemon-j/GOTMr
+  - robertladwig/GOTMr
   - aemon-j/gotmtools
   - aemon-j/SimstratR
   - aemon-j/MyLakeR
