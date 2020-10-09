@@ -123,11 +123,12 @@ test_that("can run Simstrat", {
   # 1. Example - creates directories with all model setup
   export_config(config_file = config_file, model = model)
   
-  # 2. run models
-  run_ensemble(config_file = config_file,
-               model = model)
+  setwd("Simstrat")
   
-  testthat::expect_true((file.exists("output/ensemble_output.nc")))
+  SimstratR::run_simstrat(par_file = "simstrat.par", verbose = TRUE)
+  
+  # testthat::expect_true((file.exists("output/ensemble_output.nc")))
+  testthat::expect_true((file.exists("output/T_out.dat")))
 })
 
 test_that("can run MyLake", {
@@ -142,14 +143,12 @@ test_that("can run MyLake", {
   config_file <- 'LakeEnsemblR.yaml'
   model <- c("MyLake")
   
-  # 1. Example - creates directories with all model setup
-  export_config(config_file = config_file, model = model)
+  setwd("MyLake")
   
-  # 2. run models
-  run_ensemble(config_file = config_file,
-               model = model)
+  MyLakeR::run_mylake(config_dat = "mylake.Rdata", verbose = TRUE)
   
-  testthat::expect_true((file.exists("output/ensemble_output.nc")))
+  # testthat::expect_true((file.exists("output/ensemble_output.nc")))
+  testthat::expect_true((file.exists("output/output.RData")))
 })
 
 
