@@ -18,7 +18,7 @@ before_install:
 #  - rm '/usr/local/bin/gfortran' ; fi
  # - if [ "$TRAVIS_OS_NAME" = "osx" ]; then brew update          ; fi
  # - if [ "$TRAVIS_OS_NAME" = "osx" ]; then brew upgrade netcdf ; fi
-#  - if [ "$TRAVIS_OS_NAME" = "osx" ]; then brew install gd ; fi
+  - if [ "$TRAVIS_OS_NAME" = "osx" ]; then brew install gcc ; fi
 
 warnings_are_errors: false
 
@@ -33,7 +33,7 @@ after_success:
 
 r_github_packages:
   - cran/XML@3.99-0.3
-  - tadhg-moore/GLM3r
+  - robertladwig/GLM3r@v3.1.0a3
   - USGS-R/glmtools@ggplot_overhaul
   - aemon-j/FLakeR@inflow
   - robertladwig/GOTMr
