@@ -17,8 +17,8 @@ repos:
 before_install:
 #  - rm '/usr/local/bin/gfortran' ; fi
  # - if [ "$TRAVIS_OS_NAME" = "osx" ]; then brew update          ; fi
-  - if [ "$TRAVIS_OS_NAME" = "osx" ]; then brew link --overwrite gcc ; fi
-  - if [ "$TRAVIS_OS_NAME" = "osx" ]; then brew upgrade gcc ; fi
+#  - if [ "$TRAVIS_OS_NAME" = "osx" ]; then brew link --overwrite gcc ; fi
+#  - if [ "$TRAVIS_OS_NAME" = "osx" ]; then brew upgrade gcc ; fi
 
 warnings_are_errors: false
 
