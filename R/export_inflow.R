@@ -76,12 +76,23 @@ export_inflow <- function(config_file, model = c("GOTM", "GLM", "Simstrat", "FLa
                        "num_outlet" = 0)
     }else{
       inp_list <- list("num_inflows" = 1,
-                       "num_outlet" = 0)
+                       "num_outlet" = 0,
+                       "inflow_fl" = "inflow_file.csv")
     }
 
     nml <- glmtools::set_nml(nml, arg_list = inp_list)
     glmtools::write_nml(nml, glm_nml)
 
+    if(use_outflows){
+      nml_list <- list("num_outlet" = 1, "outflow_fl" = "outflow.csv")
+      nml <- glmtools::set_nml(nml, arg_list = nml_list)
+      glmtools::write_nml(nml, glm_nml)
+      
+      max_elv <- get_nml_value(nml, "H")
+      nml <- glmtools::set_nml(nml, arg_list = list("outl_elvs" = max(max_elv)))
+      glmtools::write_nml(nml, glm_nml)
+
+    }
   }
 
 ##---------------GOTM-------------
@@ -243,8 +254,8 @@ export_inflow <- function(config_file, model = c("GOTM", "GLM", "Simstrat", "FLa
 
       # Write to file
       write.table(flake_inflow, flake_outfpath, quote = FALSE, row.names = FALSE, sep = "\t",
-                    col.names = FALSE)
-
+                  col.names = FALSE)
+      
       temp_fil <- get_yaml_value(config_file, "config_files", "FLake")
       input_nml(temp_fil, label = "inflow", key = "time_step_number", nrow(flake_inflow))
 
@@ -265,6 +276,7 @@ export_inflow <- function(config_file, model = c("GOTM", "GLM", "Simstrat", "FLa
 
       # Write to file
       write.csv(glm_inflow, inflow_outfile, row.names = FALSE, quote = FALSE)
+<<<<<<< HEAD
 
       # Input to nml file
       nml_path <- file.path(folder, gotmtools::get_yaml_value(config_file, "config_files",
@@ -275,8 +287,15 @@ export_inflow <- function(config_file, model = c("GOTM", "GLM", "Simstrat", "FLa
       nml <- glmtools::set_nml(nml, arg_list = nml_list)
 
       glmtools::write_nml(nml, nml_path)
+=======
+>>>>>>> upstream/master
       message("GLM: Created file ", file.path(folder, "GLM", "inflow_file.csv"))
+      
+      glm_outflow <- glm_inflow[, c("Time", "FLOW")]
+      outflow_outfile <- file.path("GLM", "outflow.csv")
+      write.csv(glm_outflow, outflow_outfile, row.names = FALSE, quote = FALSE)
 
+<<<<<<< HEAD
       if(use_outflows){
         nml_list <- list("num_outlet" = 1, "outflow_fl" = "outflow.csv")
         nml <- glmtools::set_nml(nml, arg_list = nml_list)
@@ -291,9 +310,11 @@ export_inflow <- function(config_file, model = c("GOTM", "GLM", "Simstrat", "FLa
         write.csv(glm_outflow, outflow_outfile, row.names = FALSE, quote = FALSE)
 
         message("GLM: Created outflow file ", file.path(folder, "GLM", "outflow.csv"))
+=======
+      message("GLM: Created outflow file ", file.path(folder, "GLM", "outflow.csv"))
+>>>>>>> upstream/master
       }
 
-    }
 
     ## GOTM
     if("GOTM" %in% model){
@@ -309,6 +330,10 @@ export_inflow <- function(config_file, model = c("GOTM", "GLM", "Simstrat", "FLa
       # Write to file
       write.table(gotm_inflow, gotm_outfpath, quote = FALSE, row.names = FALSE, sep = "\t",
                   col.names = TRUE)
+<<<<<<< HEAD
+=======
+
+>>>>>>> upstream/master
 
       message("GOTM: Created file ", file.path(folder, "GOTM", gotm_outfile))
 
@@ -372,18 +397,6 @@ export_inflow <- function(config_file, model = c("GOTM", "GLM", "Simstrat", "FLa
       writeLines(c(inflow_line_1, inflow_line_2, inflow_line_3, inflow_line_4),
                  file_connection)
       close(file_connection)
-
-      # #Scale met
-      # if(!is.null(scale_param)){
-      #   scale_met(sim_met, pars = scale_param, model = "Simstrat", out_file = met_outfpath)
-      # } else {
-      #   # Write to file
-      #   write.table(sim_met, met_outfpath, quote = FALSE, row.names = FALSE, sep = "\t",
-      #               col.names = TRUE)
-      # }
-
-      ### Write the table in the present working directory
-      # input_json(file = par_file, label = "Input", key = "Forcing", "\"meteo_file.dat\"")
 
       message("Simstrat: Created file ", file.path(folder, "Simstrat", inflow_outfile))
 
