@@ -417,7 +417,7 @@ cali_ensemble <- function(config_file, num = NULL, param_file = NULL, cmethod = 
                                         pars_l[[m]]$name),
                        upper = setNames(pars_l[[m]]$upper,
                                         pars_l[[m]]$name), 
-                       updatecov = 15,
+                       updatecov = 80,
                        ...)}),
         model
       )
@@ -503,7 +503,7 @@ cali_ensemble <- function(config_file, num = NULL, param_file = NULL, cmethod = 
                                                            pars_l[[m]]$name),
                                           upper = setNames(pars_l[[m]]$upper,
                                                            pars_l[[m]]$name), 
-                                          updatecov = 15,
+                                          updatecov = 80,
                                           ...)
                       message(paste0("\nFinished MCMC for model ", m, "\n"))
                       return(res)}),
