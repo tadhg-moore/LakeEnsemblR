@@ -328,8 +328,11 @@ qual_fun <- function(O, P){
 
   # normalised mean absolute error
   nmae <- mean(abs((O - P)/O), na.rm = TRUE)
+  
+  # negative log likelihood
+  nLL <- LL = -2 * sum(dnorm(as.matrix(O[, -1]), mean = as.matrix(P[, -1]), sd = 0.75, log = TRUE))
 
-  qual <- data.frame(rmse = rmse, nse = nse, r = r, re = re, mae = mae, nmae = nmae)
+  qual <- data.frame(rmse = rmse, nse = nse, r = r, re = re, mae = mae, nmae = nmae, nLL = nLL)
 
   return(qual)
 }

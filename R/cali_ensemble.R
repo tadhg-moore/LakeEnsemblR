@@ -409,13 +409,15 @@ cali_ensemble <- function(config_file, num = NULL, param_file = NULL, cmethod = 
                        out_f = out_f,  obs_deps = obs_deps, obs_out = obs_out,
                        out_hour = out_hour,
                        qualfun = function(O, P){
-                         ssr = sum((as.matrix(O[, -1]) - as.matrix(P[, -1]))^2, na.rm = TRUE)},
+                         LL = -2 * sum(dnorm(as.matrix(O[, -1]), mean = as.matrix(P[, -1]), sd = 0.75, log = TRUE))
+                         },
                        outf_n = outf_n,
                        niter = num,
                        lower = setNames(pars_l[[m]]$lower,
                                         pars_l[[m]]$name),
                        upper = setNames(pars_l[[m]]$upper,
-                                        pars_l[[m]]$name),
+                                        pars_l[[m]]$name), 
+                       updatecov = 15,
                        ...)}),
         model
       )
@@ -493,14 +495,16 @@ cali_ensemble <- function(config_file, num = NULL, param_file = NULL, cmethod = 
                                           out_f = out_f,  obs_deps = obs_deps, obs_out = obs_out,
                                           out_hour = out_hour,
                                           qualfun = function(O, P){
-                                           ssr = sum((as.matrix(O[, -1]) - as.matrix(P[, -1]))^2,
-                                                     na.rm = TRUE)},
+                                            LL = -2 * sum(dnorm(as.matrix(O[, -1]), mean = as.matrix(P[, -1]), sd = 0.75, log = TRUE))
+                                          },
                                           outf_n = outf_n,
                                           niter = num,
                                           lower = setNames(pars_l[[m]]$lower,
                                                            pars_l[[m]]$name),
                                           upper = setNames(pars_l[[m]]$upper,
-                                                           pars_l[[m]]$name), ...)
+                                                           pars_l[[m]]$name), 
+                                          updatecov = 15,
+                                          ...)
                       message(paste0("\nFinished MCMC for model ", m, "\n"))
                       return(res)}),
                   model
