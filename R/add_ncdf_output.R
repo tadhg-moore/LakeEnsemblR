@@ -67,13 +67,13 @@ add_netcdf_output <- function(output_lists, folder = ".", model, out_file) {
   n_vals <- (nc$dim$lon$len * nc$dim$lat$len *
                nc$dim$model$len * nc$dim$time$len * nc$dim$z$len)
   # Check for empty member
-  for(m in seq_len(nc$dim$member$len)) {
+  for(m in seq_len(nc$dim$member$len + 1)) {
     nas <- sum(is.na(var[m, , , ]))
     if(nas == n_vals) {
       break
     }
   }
-  if(m == nc$dim$member$len) {
+  if(m == (nc$dim$member$len + 1)) {
     stop("All members are full!\nChange output:
          file: \nor write function to add new members in netCDF :P")
   }
