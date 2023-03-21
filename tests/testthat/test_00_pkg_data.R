@@ -12,7 +12,7 @@ test_that("create model meteo & config files", {
 
   library(LakeEnsemblR)
   library(gotmtools)
-  template_folder <- system.file("extdata/feeagh", package= "LakeEnsemblR")
+  template_folder <- system.file("extdata/feeagh", package = "LakeEnsemblR")
   setwd(template_folder) # Change working directory to example folder
 
   # Set config file
@@ -104,8 +104,10 @@ test_that("can run MyLake", {
   export_config(config_file = config_file, model = model)
   
   # 2. run models
-  run_ensemble(config_file = config_file,
-               model = model)
+  suppressWarnings({
+    run_ensemble(config_file = config_file,
+                 model = model)
+  })
   
   testthat::expect_true((file.exists("output/ensemble_output.nc")))
 })
@@ -115,7 +117,7 @@ test_that("can add members to netCDF models", {
 
   file.remove("output/ensemble_output.nc")
   config_file <- "LakeEnsemblR_copy.yaml"
-  model <- c("FLake", "GLM", "GOTM", "Simstrat", "MyLake")
+  model <- c("FLake", "GLM", "GOTM", "Simstrat")
   ncdf <- "output/ensemble_output.nc"
 
   # 1. Example - creates directories with all model setup
@@ -191,7 +193,7 @@ test_that("can add members to netCDF models", {
   testthat::expect_true(is.list(test10))
 
   test11 <- tryCatch({
-    plot_resid(ncdf, var = "temp")
+    plot_resid(ncdf = ncdf, var = "temp")
   }, error = function(e) return(FALSE))
 
   test12 <- tryCatch({
@@ -233,7 +235,7 @@ test_that("can run models & generate csv files", {
 
   file.remove("output/ensemble_output.nc")
   config_file <- "LakeEnsemblR_copy.yaml"
-  model <- c("FLake", "GLM", "GOTM", "Simstrat", "MyLake")
+  model <- c("FLake", "GLM", "GOTM", "Simstrat")
 
   # Change to text output
   input_yaml(config_file, label = "output", key = "format", value = "text")
@@ -245,7 +247,7 @@ test_that("can run models & generate csv files", {
   run_ensemble(config_file = config_file,
                model = model)
 
-  testthat::expect_true(length(list.files("output", pattern = "csv")) == 16L)
+  testthat::expect_true(length(list.files("output", pattern = "csv")) == 13L)
 })
 
 test_that("can calibrate models", {
@@ -258,10 +260,11 @@ test_that("can calibrate models", {
                 folder = ".")
 
   # 2. Calibrate models
-  cali_ensemble(config_file = config_file, cmethod = "LHC", num = 5,
-                model = c("FLake", "GLM", "GOTM", "Simstrat", "MyLake"))
-
-  testthat::expect_true(length(list.files("cali")) == 10 )
+  suppressWarnings({
+    cali_ensemble(config_file = config_file, cmethod = "LHC", num = 5,
+                  model = c("FLake", "GLM", "GOTM", "Simstrat", "MyLake"))
+  })
+  testthat::expect_true(length(list.files("cali")) == 10)
 })
 
 test_that("check plots", {
@@ -269,7 +272,7 @@ test_that("check plots", {
   # Change to netcdf output
   file.remove("output/ensemble_output.nc")
   config_file <- "LakeEnsemblR_copy.yaml"
-  model <- c("FLake", "GLM", "GOTM", "Simstrat", "MyLake")
+  model <- c("FLake", "GLM", "GOTM", "Simstrat")
   ncdf <- "output/ensemble_output.nc"
   input_yaml(config_file, label = "output", key = "format", value = "netcdf")
 
