@@ -23,6 +23,7 @@ Exports settings like start and end time and time step,
  based on the master LakeEnsemblR config file
 }
 \examples{
-
+\dontrun{
+}
 }
 \keyword{methods}

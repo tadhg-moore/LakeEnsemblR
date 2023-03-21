@@ -57,6 +57,8 @@ configuration file. Calls export_model_parameters. Defaults to TRUE.}
 Exports all settings from the master LakeEnsemblR config file
 }
 \examples{
+\dontrun{
+}
 
 }
 \author{

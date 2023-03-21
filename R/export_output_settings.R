@@ -8,8 +8,9 @@
 #'  Options include c("GOTM", "GLM", "Simstrat", "FLake", "MyLake")
 #'@param folder folder
 #'@keywords methods
-#'@examples
-#'
+#' @examples
+#' \dontrun{
+#' }
 #'@importFrom gotmtools get_yaml_value input_yaml
 #'@importFrom glmtools read_nml set_nml write_nml
 #'

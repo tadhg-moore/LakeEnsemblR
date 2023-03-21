@@ -23,6 +23,7 @@ Exports settings related to output (time step, format),
  for each model
 }
 \examples{
-
+\dontrun{
+}
 }
 \keyword{methods}

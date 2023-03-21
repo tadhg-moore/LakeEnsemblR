@@ -17,6 +17,7 @@
 #'    and depth as the second argument.
 #' @param avfun Name of the function to calculate the ensemble average, defaults to "mean"
 #' @author Johannes Feldbauer
+#' @importFrom purrr map
 #' @export
 #' @examples
 #' \dontrun{

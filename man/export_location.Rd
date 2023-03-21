@@ -23,6 +23,7 @@ Exports settings like hypsograph, coordinates and ice settings,
  based on the master LakeEnsemblR config file
 }
 \examples{
-
+\dontrun{
+}
 }
 \keyword{methods}

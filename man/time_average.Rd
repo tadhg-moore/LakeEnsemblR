@@ -19,7 +19,7 @@ time_average(timeseries, start, end, n = 1000)
 Calculates the average of an irregular time series
 }
 \examples{
-
-
+\dontrun{
+}
 }
 \keyword{methods}

@@ -26,7 +26,9 @@
 #'@keywords methods
 #'@author
 #'Tadhg Moore, Jorrit Mesman, Johannes Feldbauer, Robert Ladwig
-#'@examples
+#' @examples
+#' \dontrun{
+#' }
 #'
 #'@export
 

@@ -22,6 +22,8 @@ Options include c("GOTM", "GLM", "Simstrat", "FLake", "MyLake")}
 Creates directories with file setups for each model, based on the master LakeEnsemblR config file
 }
 \examples{
+\dontrun{
+}
 
 
 }

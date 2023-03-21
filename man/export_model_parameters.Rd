@@ -23,7 +23,7 @@ Exports model-specific parameters that are specified in the model_parameters
  section of the master config file.
 }
 \examples{
-
-
+\dontrun{
+}
 }
 \keyword{methods}
