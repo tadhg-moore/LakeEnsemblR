@@ -40,7 +40,8 @@ Read in FLake results, interpolate to a gridded struture and return a dataframe 
 }
 \examples{
 \dontrun{
-df <- read_flake_out(output = "FLake/output/output.dat", folder = "FLake", nml_file = "FLake/feeagh.nml")
+df <- read_flake_out(output = "FLake/output/output.dat",
+folder = "FLake", nml_file = "FLake/feeagh.nml")
 }
 
 }
