@@ -2,6 +2,7 @@
 #'
 #'Runs lintr::lint function, using the settings agreed upon for LakeEnsemblR
 #' @param file filepath; to R script that you want to run the lintr::lint function on
+#' @importFrom lintr with_defaults lint
 #' @examples
 #' \dontrun{
 #' run_lint(file = "export_config.R")
