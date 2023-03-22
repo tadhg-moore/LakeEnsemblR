@@ -6,9 +6,9 @@
 #'@param end POSIXct; end of the averaging window
 #'@param n integer; number of blocks
 #'@keywords methods
-#'@examples
-#'
-#'
+#' @examples
+#' \dontrun{
+#' }
 #'@importFrom stats approx
 #'@importFrom zoo na.approx
 #'
