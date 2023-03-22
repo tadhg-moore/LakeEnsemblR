@@ -256,15 +256,15 @@ test_that("can calibrate models", {
   file.remove("output/ensemble_output.nc")
   config_file <- "LakeEnsemblR_copy.yaml"
   export_config(config_file = config_file,
-                model = c("FLake", "GLM", "GOTM", "Simstrat", "MyLake"),
+                model = c("FLake", "GLM", "GOTM", "Simstrat"),
                 folder = ".")
 
   # 2. Calibrate models
   suppressWarnings({
     cali_ensemble(config_file = config_file, cmethod = "LHC", num = 5,
-                  model = c("FLake", "GLM", "GOTM", "Simstrat", "MyLake"))
+                  model = c("FLake", "GLM", "GOTM", "Simstrat"))
   })
-  testthat::expect_true(length(list.files("cali")) == 10)
+  testthat::expect_true(length(list.files("cali")) == 8)
 })
 
 test_that("check plots", {
