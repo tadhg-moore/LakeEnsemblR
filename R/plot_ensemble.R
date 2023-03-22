@@ -170,15 +170,15 @@ plot_ensemble <- function(ncdf, model = c("FLake", "GLM",  "GOTM", "Simstrat", "
   
   # Plot main figure
   p1 <- ggplot() +
-    geom_ribbon(data = dat_av, aes_string(selec_col2, ymin = "min", ymax = "max"),
+    geom_ribbon(data = dat_av, aes(.data[[selec_col2]], ymin = .data[["min"]], ymax = .data[["max"]]),
                 alpha = 0.2) +
-    geom_line(data = var_list_long, aes_string(x = selec_col2, y = "value", col = dim),
+    geom_line(data = var_list_long, aes(x = .data[[selec_col2]], y = .data[["value"]], col = .data[[dim]]),
               lwd = ifelse(dim == "member", 0.75, 1),
               alpha = ifelse(dim == "member", 0.75, 1), na.rm = TRUE) +
-    geom_line(data = dat_av, aes_string(selec_col2, "mean", col = "Type"),
+    geom_line(data = dat_av, aes(.data[[selec_col2]], .data[["mean"]], col = .data[["Type"]]),
               lwd = 1.33, na.rm = TRUE) +
-    geom_point(data = obs, aes_string(x = selec_col2, y = "value", col = "Observed"), size = 1,
-               na.rm = TRUE) +
+    geom_point(data = obs, aes(x = .data[[selec_col2]], y = .data[["value"]], col = .data[["Observed"]]),
+               size = 1, na.rm = TRUE) +
     scale_colour_manual(values = values,
                         breaks = breaks,
                         guide = guide) +
@@ -228,13 +228,13 @@ plot_ensemble <- function(ncdf, model = c("FLake", "GLM",  "GOTM", "Simstrat", "
       dat_resav <- na.exclude(dat_resav)
       
       p2 <- ggplot() +
-        geom_ribbon(data = dat_resav, aes_string(selec_col2, ymin = "min", ymax = "max"),
+        geom_ribbon(data = dat_resav, aes(.data[[selec_col2]], ymin = .data[["min"]], ymax = .data[["max"]]),
                     alpha = 0.2) +
-        geom_line(data = dat_res, aes_string(x = selec_col2, y = "value", col = dim),
+        geom_line(data = dat_res, aes(x = .data[[selec_col2]], y = .data[["value"]], col = .data[[dim]]),
                   na.rm = TRUE) +
-        geom_line(data = na.omit(dat_res), aes_string(x = selec_col2, y = "value", col = dim),
+        geom_line(data = na.omit(dat_res), aes(x = .data[[selec_col2]], y = .data[["value"]], col = .data[[dim]]),
                   na.rm = TRUE) +
-        geom_line(data = dat_resav, aes_string(selec_col2, "mean", col = "Type"), lwd = 1.33,
+        geom_line(data = dat_resav, aes(.data[[selec_col2]], .data[["mean"]], col = .data[["Type"]]), lwd = 1.33,
                   na.rm = TRUE) +
         scale_colour_manual(values = c("grey42", colfunc(length(unique(dat_res[, dim])) - 1),
                                        "grey66"),
@@ -273,7 +273,7 @@ plot_ensemble <- function(ncdf, model = c("FLake", "GLM",  "GOTM", "Simstrat", "
   
   # Plot boxwhiskers
   if(boxwhisker){
-    p3 <- ggplot(var_list_long, aes_string(x = dim, y = "value")) +
+    p3 <- ggplot(var_list_long, aes(x = .data[[dim]], y = .data[["value"]])) +
       geom_boxplot(na.rm = TRUE) +
       geom_jitter(shape = 16, position = position_jitter(0.2), alpha = 0.3, na.rm = TRUE) +
       stat_summary(fun = mean, geom = "point", shape = 10, size = 4, na.rm = TRUE) +
@@ -283,8 +283,12 @@ plot_ensemble <- function(ncdf, model = c("FLake", "GLM",  "GOTM", "Simstrat", "
                             linetype = c(rep("solid", length(unique(var_list_long[, dim])) + 1),
                                          rep("blank", 1)),
                             shape = c(rep(NA, length(unique(var_list_long[, dim])) + 1),
-                                      rep(16, 1))))) +
-      theme_classic()
+                                      rep(16, 1)))))  +
+      theme(text = element_text(size = 10),
+            axis.text.x = element_text(angle = 0, hjust = 0.5),
+            legend.margin = margin(0, 0, 0, 0),
+            legend.box.margin = margin(0, 0, 0, 0),
+            legend.position = "bottom", legend.title = element_blank())
     
     if(!is.null(depth)){
       p3 <- p3 +
