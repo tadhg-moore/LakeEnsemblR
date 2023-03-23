@@ -1,0 +1,204 @@
+"model","var","longname","units","dims","file","plot"
+"FLake","No",NA,NA,NA,NA,FALSE
+"FLake","time",NA,NA,NA,NA,FALSE
+"FLake","Ts",NA,NA,NA,NA,FALSE
+"FLake","Tm",NA,NA,NA,NA,FALSE
+"FLake","Tb",NA,NA,NA,NA,FALSE
+"FLake","ufr_a",NA,NA,NA,NA,FALSE
+"FLake","ufr_w",NA,NA,NA,NA,FALSE
+"FLake","Wconv",NA,NA,NA,NA,FALSE
+"FLake","Qw",NA,NA,NA,NA,FALSE
+"FLake","Q_se",NA,NA,NA,NA,FALSE
+"FLake","Q_la",NA,NA,NA,NA,FALSE
+"FLake","I_w",NA,NA,NA,NA,FALSE
+"FLake","Q_lwa",NA,NA,NA,NA,FALSE
+"FLake","Q_lww",NA,NA,NA,NA,FALSE
+"FLake","h_ML",NA,NA,NA,NA,FALSE
+"FLake","C_T",NA,NA,NA,NA,FALSE
+"FLake","H_B1",NA,NA,NA,NA,FALSE
+"FLake","T_B1",NA,NA,NA,NA,FALSE
+"FLake","Qbot",NA,NA,NA,NA,FALSE
+"FLake","H_ice",NA,NA,NA,NA,FALSE
+"FLake","H_snow",NA,NA,NA,NA,FALSE
+"FLake","T_ice",NA,NA,NA,NA,FALSE
+"FLake","T_snow",NA,NA,NA,NA,FALSE
+"GLM","NS","Number of Layers","",1,NA,FALSE
+"GLM","hice","Height of Ice","meters",1,NA,FALSE
+"GLM","hsnow","Height of Snow","meters",1,NA,FALSE
+"GLM","hwice","Height of WhiteIce","meters",1,NA,FALSE
+"GLM","avg_surf_temp","Running average surface temperature","celsius",1,NA,FALSE
+"GLM","restart_variables","dep_mx,prev_thick,g_prime_two_layer,energy_avail_max,mass_epi,old_slope,time_end_shear,time_start_shear,time_count_end,time_count_sim,half_seiche_period,thermocline_height,f0, fsum,u_f,u0,u_avg","various",1,NA,FALSE
+"GLM","precip","precipitation","m/s",3,NA,FALSE
+"GLM","evap","evaporation","m/s",3,NA,FALSE
+"GLM","I_0","Shortwave","10E-6m",3,NA,FALSE
+"GLM","wind","wind","m/s",3,NA,FALSE
+"GLM","Tot_V","lake volume","m3",3,NA,FALSE
+"GLM","V","layer volume","m3",4,NA,FALSE
+"GLM","salt","salinity","g/kg",4,NA,FALSE
+"GLM","temp","temperature","celsius",4,NA,FALSE
+"GLM","rho","density","unknown",4,NA,FALSE
+"GLM","rad","solar radiation","unknown",4,NA,FALSE
+"GLM","extc_coef","extc_coef","unknown",4,NA,FALSE
+"GLM","u_mean","mean velocity","m/s",4,NA,FALSE
+"GLM","u_orb","orbital velocity","m/s",4,NA,FALSE
+"GLM","Taub","layer stress","N/m2",4,NA,FALSE
+"GOTM","temp","potential temperature","Celsius",4,NA,FALSE
+"GOTM","salt","salinity","g/kg",4,NA,FALSE
+"GOTM","rho","potential density","kg/m3",4,NA,FALSE
+"GOTM","temp_obs","observed temperature","Celsius",4,NA,FALSE
+"GOTM","salt_obs","observed salinity","psu",4,NA,FALSE
+"GOTM","u","x-velocity","m/s",4,NA,FALSE
+"GOTM","v","y-velocity","m/s",4,NA,FALSE
+"GOTM","xP","extra turbulence production","m2/s3",4,NA,FALSE
+"GOTM","h","layer thickness","m",4,NA,FALSE
+"GOTM","tke","turbulent kinetic energy","m2/s2",4,NA,FALSE
+"GOTM","eps","energy dissipation rate","m2/s3",4,NA,FALSE
+"GOTM","num","turbulent diffusivity of momentum","m2/s",4,NA,FALSE
+"GOTM","nuh","turbulent diffusivity of heat","m2/s",4,NA,FALSE
+"GOTM","nus","turbulent diffusivity of salt","m2/s",4,NA,FALSE
+"GOTM","u_obs","observed x-velocity","m/s",4,NA,FALSE
+"GOTM","v_obs","observed y-velocity","m/s",4,NA,FALSE
+"GOTM","fric","extra friction coefficient in water column","",4,NA,FALSE
+"GOTM","drag","drag coefficient in water column","",4,NA,FALSE
+"GOTM","SS","shear frequency squared","1/s2",4,NA,FALSE
+"GOTM","P","shear production","m2/s3",4,NA,FALSE
+"GOTM","uu","variance of u-fluctuations","m2/s2",4,NA,FALSE
+"GOTM","vv","variance of v-fluctuations","m2/s2",4,NA,FALSE
+"GOTM","ww","variance of w-fluctuations","m2/s2",4,NA,FALSE
+"GOTM","NN","buoyancy frequency squared","1/s2",4,NA,FALSE
+"GOTM","NNT","contribution of T-gradient to buoyancy frequency squared","1/s2",4,NA,FALSE
+"GOTM","NNS","contribution of S-gradient to buoyancy frequency squared","1/s2",4,NA,FALSE
+"GOTM","buoy","buoyancy","m/s2",4,NA,FALSE
+"GOTM","kb","(half) buoyancy variance","m2/s4",4,NA,FALSE
+"GOTM","epsb","destruction of buoyancy variance","m2/s5",4,NA,FALSE
+"GOTM","G","buoyancy production","m2/s3",4,NA,FALSE
+"GOTM","Pb","production of buoyancy variance","m2/s5",4,NA,FALSE
+"GOTM","avh","eddy diffusivity","m2/s",4,NA,FALSE
+"GOTM","L","turbulence length scale","m",4,NA,FALSE
+"GOTM","gamu","non-local flux of u-momentum","m2/s2",4,NA,FALSE
+"GOTM","gamv","non-local flux of v-momentum","m2/s2",4,NA,FALSE
+"GOTM","gamb","non-local  buoyancy flux","m2/s3",4,NA,FALSE
+"GOTM","gamh","non-local heat flux","K m/s",4,NA,FALSE
+"GOTM","gams","non-local salinity flux","g/kg m/s",4,NA,FALSE
+"GOTM","cmue1","stability function for momentum diffusivity","",4,NA,FALSE
+"GOTM","cmue2","stability function for scalar diffusivity","",4,NA,FALSE
+"GOTM","gam","non-dimensional non-local buoyancy flux","",4,NA,FALSE
+"GOTM","an","non-dimensional buoyancy time scale","",4,NA,FALSE
+"GOTM","as","non-dimensional shear time scale","",4,NA,FALSE
+"GOTM","at","non-dimensional buoyancy variance","",4,NA,FALSE
+"GOTM","r","turbulent time scale ratio","",4,NA,FALSE
+"GOTM","Rig","gradient Richardson number","",4,NA,FALSE
+"GOTM","xRf","flux Richardson number","",4,NA,FALSE
+"GOTM","taux","turbulent flux of momentum (x)","m2/s2",4,NA,FALSE
+"GOTM","tauy","turbulent flux of momentum (y)","m2/s2",4,NA,FALSE
+"GOTM","u_taus","surface friction velocity","m/s",3,NA,FALSE
+"GOTM","u10","10m wind (x)","m/s",3,NA,FALSE
+"GOTM","v10","10m wind (y)","m/s",3,NA,FALSE
+"GOTM","airt","2m air temperature","Celsius",3,NA,FALSE
+"GOTM","airp","air pressure","Pa",3,NA,FALSE
+"GOTM","hum","relative humidity","%",3,NA,FALSE
+"GOTM","es","saturation water vapor pressure","Pa",3,NA,FALSE
+"GOTM","ea","actual water vapor presure","Pa",3,NA,FALSE
+"GOTM","qs","saturation specific humidity","kg/kg",3,NA,FALSE
+"GOTM","qa","specific humidity","kg/kg",3,NA,FALSE
+"GOTM","rhoa","air density","kg/m3",3,NA,FALSE
+"GOTM","cloud","cloud cover","",3,NA,FALSE
+"GOTM","albedo","albedo","",3,NA,FALSE
+"GOTM","precip","precipitation","m/s",3,NA,FALSE
+"GOTM","evap","evaporation","m/s",3,NA,FALSE
+"GOTM","int_precip","integrated precipitation","m",3,NA,FALSE
+"GOTM","int_evap","integrated evaporation","m",3,NA,FALSE
+"GOTM","int_swr","integrated short wave radiation","J/m2",3,NA,FALSE
+"GOTM","int_heat","integrated surface heat fluxes","J/m2",3,NA,FALSE
+"GOTM","int_total","integrated total surface heat exchange","J/m2",3,NA,FALSE
+"GOTM","I_0","incoming short wave radiation","W/m2",3,NA,FALSE
+"GOTM","qh","sensible heat flux","W/m2",3,NA,FALSE
+"GOTM","qe","latent heat flux","W/m2",3,NA,FALSE
+"GOTM","ql","net longwave radiation","W/m2",3,NA,FALSE
+"GOTM","heat","net surface heat flux","W/m2",3,NA,FALSE
+"GOTM","tx","wind stress (x)","m2/s2",3,NA,FALSE
+"GOTM","ty","wind stress (y)","m2/s2",3,NA,FALSE
+"GOTM","sst","sea surface temperature","Celsius",3,NA,FALSE
+"GOTM","sst_obs","observed sea surface temperature","Celsius",3,NA,FALSE
+"GOTM","sss","sea surface salinity","1e-3",3,NA,FALSE
+"GOTM","zeta","sea surface elevation","m",3,NA,FALSE
+"GOTM","mld_surf","surface mixed layer depth","m",3,NA,FALSE
+"GOTM","rad","shortwave radiation","W/m2",4,NA,FALSE
+"GOTM","bioshade","fraction of visible light that is not shaded by overlying biogeochemistry","-",4,NA,FALSE
+"GOTM","ga","coordinate scaling","",4,NA,FALSE
+"GOTM","Af","hypsograph at grid interfaces","m^2",4,NA,FALSE
+"GOTM","int_flow","stream: integrated","m3",3,NA,FALSE
+"GOTM","int_water_balance","integrated total water balance","m3",3,NA,FALSE
+"GOTM","Tice_surface","ice temperature (surface)","celsius",3,NA,FALSE
+"GOTM","Tf","ice freezing temperature","celsius",3,NA,FALSE
+"GOTM","Hice","ice thickness","m",3,NA,FALSE
+"GOTM","surface_ice_energy","ice energy (surface)","J/m2",3,NA,FALSE
+"GOTM","bottom_ice_energy","ice energy (bottom)","J/m2",3,NA,FALSE
+"GOTM","ocean_ice_flux","ocean-ice heat flux","W/m2",3,NA,FALSE
+"GOTM","Hfrazil","ice thickness (frazil)","m",3,NA,FALSE
+"GOTM","dHis","ice growth (surface)","m",3,NA,FALSE
+"GOTM","dHib","ice growth (bottom)","m",3,NA,FALSE
+"GOTM","Qlayer","inflows over water column","m3/s",4,NA,FALSE
+"GOTM","Qs","salt inflow","1/s",4,NA,FALSE
+"GOTM","Qt","temperature inflow","Celsius/s",4,NA,FALSE
+"GOTM","wq","vertical water balance advection velocity","m/s",4,NA,FALSE
+"GOTM","FQ","vertical water balance flux","m3/s",4,NA,FALSE
+"GOTM","Qres","residual water balance inflows","m3/s",4,NA,FALSE
+"GOTM","Q_outflow","stream (Q): outflow","m3/s",3,NA,FALSE
+"GOTM","Q_inflow_2","stream (Q): inflow_2","m3/s",3,NA,FALSE
+"GOTM","T_inflow_2","stream (T): inflow_2","Celsius",3,NA,FALSE
+"GOTM","Q_inflow","stream (Q): inflow","m3/s",3,NA,FALSE
+"GOTM","T_inflow","stream (T): inflow","Celsius",3,NA,FALSE
+"GOTM","int_inflow","stream: integrated inflow(s)","m3",3,NA,FALSE
+"GOTM","int_outflow","stream: integrated outflow(s)","m3",3,NA,FALSE
+"GOTM","mld_bott","bottom mixed layer depth","m",3,NA,FALSE
+"GOTM","Ekin","kinetic energy","J",3,NA,FALSE
+"GOTM","Epot","potential energy","J",3,NA,FALSE
+"GOTM","Eturb","turbulent kinetic energy","J",3,NA,FALSE
+"Simstrat","B",NA,NA,NA,"Simstrat/output/B_out.dat",FALSE
+"Simstrat","BlackIceH",NA,NA,NA,"Simstrat/output/BlackIceH_out.dat",FALSE
+"Simstrat","eps",NA,NA,NA,"Simstrat/output/eps_out.dat",FALSE
+"Simstrat","HA",NA,NA,NA,"Simstrat/output/HA_out.dat",FALSE
+"Simstrat","HK",NA,NA,NA,"Simstrat/output/HK_out.dat",FALSE
+"Simstrat","HV",NA,NA,NA,"Simstrat/output/HV_out.dat",FALSE
+"Simstrat","HW",NA,NA,NA,"Simstrat/output/HW_out.dat",FALSE
+"Simstrat","k",NA,NA,NA,"Simstrat/output/k_out.dat",FALSE
+"Simstrat","NN",NA,NA,NA,"Simstrat/output/NN_out.dat",FALSE
+"Simstrat","nuh",NA,NA,NA,"Simstrat/output/nuh_out.dat",FALSE
+"Simstrat","num",NA,NA,NA,"Simstrat/output/num_out.dat",FALSE
+"Simstrat","P",NA,NA,NA,"Simstrat/output/P_out.dat",FALSE
+"Simstrat","Ps",NA,NA,NA,"Simstrat/output/Ps_out.dat",FALSE
+"Simstrat","Qvert",NA,NA,NA,"Simstrat/output/Qvert_out.dat",FALSE
+"Simstrat","Rad0",NA,NA,NA,"Simstrat/output/Rad0_out.dat",FALSE
+"Simstrat","S",NA,NA,NA,"Simstrat/output/S_out.dat",FALSE
+"Simstrat","SnowH",NA,NA,NA,"Simstrat/output/SnowH_out.dat",FALSE
+"Simstrat","T",NA,NA,NA,"Simstrat/output/T_out.dat",FALSE
+"Simstrat","TotalIceH",NA,NA,NA,"Simstrat/output/TotalIceH_out.dat",FALSE
+"Simstrat","U",NA,NA,NA,"Simstrat/output/U_out.dat",FALSE
+"Simstrat","V",NA,NA,NA,"Simstrat/output/V_out.dat",FALSE
+"Simstrat","WaterH",NA,NA,NA,"Simstrat/output/WaterH_out.dat",FALSE
+"Simstrat","WhiteIceH",NA,NA,NA,"Simstrat/output/WhiteIceH_out.dat",FALSE
+"MyLake","zz",NA,NA,NA,NA,FALSE
+"MyLake","Az",NA,NA,NA,NA,FALSE
+"MyLake","",NA,NA,NA,NA,FALSE
+"MyLake","tt",NA,NA,NA,NA,FALSE
+"MyLake","Qst",NA,NA,NA,NA,FALSE
+"MyLake","Kzt",NA,NA,NA,NA,FALSE
+"MyLake","Tzt",NA,NA,NA,NA,FALSE
+"MyLake","Czt",NA,NA,NA,NA,FALSE
+"MyLake","Szt",NA,NA,NA,NA,FALSE
+"MyLake","Pzt",NA,NA,NA,NA,FALSE
+"MyLake","Chlzt",NA,NA,NA,NA,FALSE
+"MyLake","PPzt",NA,NA,NA,NA,FALSE
+"MyLake","DOPzt",NA,NA,NA,NA,FALSE
+"MyLake","DOCzt",NA,NA,NA,NA,FALSE
+"MyLake","Qzt_sed",NA,NA,NA,NA,FALSE
+"MyLake","lambdazt",NA,NA,NA,NA,FALSE
+"MyLake","P3zt_sed",NA,NA,NA,NA,FALSE
+"MyLake","P3zt_sed_sc",NA,NA,NA,NA,FALSE
+"MyLake","His",NA,NA,NA,NA,FALSE
+"MyLake","DoF",NA,NA,NA,NA,FALSE
+"MyLake","DoM",NA,NA,NA,NA,FALSE
+"MyLake","MixStat",NA,NA,NA,NA,FALSE
+"MyLake","Wt",NA,NA,NA,NA,FALSE
+"MyLake","w_chl_zt",NA,NA,NA,NA,FALSE
