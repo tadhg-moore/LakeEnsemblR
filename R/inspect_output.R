@@ -5,8 +5,6 @@
 #' @name inspect_output
 #' @inheritParams export_config
 #' @return Launches a shiny application
-#' @import shiny
-#' @import shinydashboard
 #'
 #' @examples
 #' \dontrun{
@@ -15,10 +13,9 @@
 #' @export
 inspect_output <- function(model, config_file) {
   
-  # require(shiny)
-  # require(magrittr)
-  # require(dplyr)
-  
+  require(shiny)
+  require(shinydashboard)
+
   # model <- c("FLake", "GLM", "GOTM", "Simstrat", "MyLake")
   
   out <- connect_output(model = model, config_file = config_file)
