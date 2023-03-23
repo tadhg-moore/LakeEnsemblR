@@ -43,6 +43,8 @@ Suggests:
     MyLakeR,
     rmarkdown,
     rstudioapi,
+    shiny,
+    shinydashboard,
     SimstratR,
     testthat
 Encoding: UTF-8
