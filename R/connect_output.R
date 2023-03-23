@@ -93,10 +93,10 @@ connect_output <- function(model, config_file, folder = ".") {
       lst$ref_table <- data.frame(var = gsub("_out.dat", "", basename(fils)), file = fils)
       lst$Date <- readr::read_csv(file.path(folder, "Simstrat", "output", "T_out.dat"), 
                                col_select = 1, show_col_types = FALSE, col_names = "date", skip = 1) %>% 
-        mutate(date = date * 3600 * 24) %>% 
-        mutate(date = lubridate::as_datetime(date, origin = paste0(reference_year, "-01-01"))) %>% 
-        mutate(date = as.Date(date)) %>% 
-        pull()
+        dplyr::mutate(date = date * 3600 * 24) %>% 
+        dplyr::mutate(date = lubridate::as_datetime(date, origin = paste0(reference_year, "-01-01"))) %>% 
+        dplyr::mutate(date = as.Date(date)) %>% 
+        dplyr::pull()
       
       depths <- readr::read_csv(file.path(folder, "Simstrat", "output", "T_out.dat"), 
                                 col_select = -1, show_col_types = FALSE, col_names = FALSE, n_max = 1) %>% 
