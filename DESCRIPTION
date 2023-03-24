@@ -41,6 +41,7 @@ Suggests:
     kableExtra,
     knitr,
     MyLakeR,
+    readr,
     rmarkdown,
     rstudioapi,
     shiny,

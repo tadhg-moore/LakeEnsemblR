@@ -22,6 +22,8 @@
 
 plot_raw <- function(con, model, var, xlim = NULL, zlim = NULL, var_lab = NULL) {
   
+  require(readr)
+  
   if(model == "FLake") {
     df <- data.frame(Date = con[[model]][["Date"]], value = con[[model]][["out"]][[var]])
   } else if(model %in% c("GLM", "GOTM")) {
