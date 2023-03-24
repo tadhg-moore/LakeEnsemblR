@@ -1,30 +1,26 @@
+#' Plot raw model output
+#'
+#' Plot a variable from the raw model output.
+#'
+#' @name plot_raw
+#' @param con list; output from `connect_output()`.
+#' @inheritParams export_config
+#' @param var string; short variable name within the model. Found in the "var" column in `model_var_dic`.
+#' @param xlim Date; pairs for min and max limits for the x-axis. Default is NULL and will use the range in the dataset.
+#' @param zlim Date; pairs for min and max limits for the Z-axis. Default is NULL and will use the range in the dataset.
+#' @param var_lab string; label to be used for y-axis (2-D plot) or z-axis (3-D plot). Default is NULL and will use `var` value.
+#' @return list
+#' @import ncdf4
+#' @import ggplot2
+#' @importFrom RColorBrewer brewer.pal
+#'
+#' @examples
+#' \dontrun{
+#' }
+#'
+#' @export
 
-# con <- out
-# 
-# model <- "FLake"
-# var <- "Ts"
-# 
-# model <- "GLM"
-# var <- "temp"
-# var <- "evap"
-# 
-# model <- "GOTM"
-# var <- "temp"
-# var <- "eps"
-# var <- "precip"
-# 
-# model <- "Simstrat"
-# var <- "T"
-# var <- "eps"
-# var <- "TotalIceH"
-# var <- "Qvert"
-# 
-# model <- "MyLake"
-# var <- "Tzt"
-# var <- "Qst"
-
-
-plot_raw <- function(con, model, var, xlim = NULL, zlim = NULL) {
+plot_raw <- function(con, model, var, xlim = NULL, zlim = NULL, var_lab = NULL) {
   
   if(model == "FLake") {
     df <- data.frame(Date = con[[model]][["Date"]], value = con[[model]][["out"]][[var]])
@@ -86,18 +82,22 @@ plot_raw <- function(con, model, var, xlim = NULL, zlim = NULL) {
   if(is.null(zlim)) {
     zlim = range(df[["value"]], na.rm = TRUE)
   }
+  if(is.null(var_lab)) {
+    var_lab <- var
+  }
   
   my.cols <- RColorBrewer::brewer.pal(11, "Spectral")
   
   if(ncol(df) == 2) {
     p <- ggplot(df) +
       geom_line(aes(Date, value)) +
-      ylab(var)
+      ylab(var_lab)
   } else {
     p <- ggplot(df) +
       geom_col(aes(x = Date, y = lyr_thk, fill = value), position = 'stack', width = 1) +
-      scale_fill_gradientn(colors = rev(my.cols), name = var, limits = zlim) +
-      scale_colour_gradientn(colors = rev(my.cols), name = var, limits = zlim)
+      scale_fill_gradientn(colors = rev(my.cols), name = var_lab, limits = zlim) +
+      scale_colour_gradientn(colors = rev(my.cols), name = var_lab, limits = zlim) +
+      ylab("Depth from bottom (m)")
   }
   
   p <- p + coord_cartesian(xlim = xlim)
