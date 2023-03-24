@@ -23,8 +23,6 @@ inspect_output <- function(model, config_file) {
   #   LakeEnsemblR:::close_nc(out)
   # })
   
-  start <- as.Date(min(out[[1]]$Date))
-  end <- as.Date(max(out[[1]]$Date))
   cfg <- readLines(config_file)
   
   # lakename <- basename(lake_dir)
@@ -66,19 +64,14 @@ inspect_output <- function(model, config_file) {
                   column(3,
                          actionButton("open_output", "Open model output"),
                          uiOutput("model_sel"),
-                         uiOutput("var_sel"),
-                         conditionalPanel("input.open_output > 0",
-                                          actionButton("close_output", "Close output"))
+                         uiOutput("var_sel")
+                         # conditionalPanel("input.open_output > 0",
+                         #                  actionButton("close_output", "Close output"))
                   ),
                   column(9,
                          # h4(lakename),
                          plotOutput("plot2d", height = "700px"),
-                         sliderInput("xlim",
-                                     "Dates:",
-                                     min = start,
-                                     max = end,
-                                     value = c(start, end),
-                                     timeFormat="%Y-%m-%d", width = "100%"),
+                         uiOutput("date_slider"),
                          br(),
                          p(tags$b("Table 1."), " List of model output variables."),
                          tableOutput("model_vars")
@@ -103,12 +96,12 @@ inspect_output <- function(model, config_file) {
         lst$out[[m]]$ref_table <- model_var_dic[model_var_dic$model == m, ]
       }
     })
-    observeEvent(input$close_output, {
-      LakeEnsemblR:::close_nc(out)
-      for(i in names(lst)) {
-        lst[[i]] <- NULL
-      }
-    })
+    # observeEvent(input$close_output, {
+    #   LakeEnsemblR:::close_nc(lst$out)
+    #   for(i in names(lst)) {
+    #     lst[[i]] <- NULL
+    #   }
+    # })
     
     output$model_sel <- renderUI({
       req(!is.null(lst$out))
@@ -122,10 +115,24 @@ inspect_output <- function(model, config_file) {
                   choices = choices)
     })
     
+    output$date_slider <- renderUI({
+      req(!is.null(lst$out))
+      req(!is.null(input$model))
+      start <- min(lst$out[[input$model]][["Date"]])
+      end <- max(lst$out[[input$model]][["Date"]])
+      sliderInput("xlim",
+                  "Dates:",
+                  min = start,
+                  max = end,
+                  value = c(start, end),
+                  timeFormat="%Y-%m-%d", width = "100%")
+      
+    })
+    
     
     observeEvent(input$model, {
       lst$var1 <- NULL
-      lst$ref_table <- out[[input$model]]$ref_table
+      lst$ref_table <- lst$out[[input$model]]$ref_table
 
     })
     
@@ -143,7 +150,8 @@ inspect_output <- function(model, config_file) {
       validate(
         need(length(lst$var1) == 1 & !is.null(lst$var1), "Select a variable.")
       )
-      plot_raw(con = out, model = input$model, var = lst$var1, xlim = input$xlim, var_lab = lst$var1_lab)
+      plot_raw(con = lst$out, model = input$model, var = lst$var1, xlim = input$xlim, var_lab = lst$var1_lab) +
+        theme_bw(base_size = 14)
     })
     
     output$model_vars <- renderTable({
