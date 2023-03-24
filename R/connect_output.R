@@ -6,7 +6,6 @@
 #' @inheritParams export_config
 #' @return List with either the data loaded (FLake, MtLake) or netCDF conenctions (GLM, GOTM) or list of files to be read (Simstrat).
 #' @importFrom dplyr case_when mutate pull
-#' @importFrom readr read_csv
 #' @import ncdf4
 #'
 #' @examples
@@ -15,6 +14,8 @@
 #'
 #' @export
 connect_output <- function(model, config_file, folder = ".") {
+  
+  require(readr)
 
   original_tz <- Sys.getenv("TZ")
   on.exit({
