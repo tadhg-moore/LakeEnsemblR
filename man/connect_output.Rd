@@ -15,10 +15,10 @@ Options include c("GOTM", "GLM", "Simstrat", "FLake", "MyLake")}
 \item{folder}{folder}
 }
 \value{
-list
+List with either the data loaded (FLake, MtLake) or netCDF conenctions (GLM, GOTM) or list of files to be read (Simstrat).
 }
 \description{
-Read in FLake results, interpolate to a gridded struture and return a dataframe in long or wide format for vars = "temp"
+Load and connect to model outputs.
 }
 \examples{
 \dontrun{

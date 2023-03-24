@@ -1,11 +1,13 @@
 #' Connect model output
 #'
-#'Read in FLake results, interpolate to a gridded struture and return a dataframe in long or wide format for vars = "temp"
+#' Load and connect to model outputs.
 #'
 #' @name connect_output
 #' @inheritParams export_config
-#' @return list
-#' @importFrom glmtools get_nml_value
+#' @return List with either the data loaded (FLake, MtLake) or netCDF conenctions (GLM, GOTM) or list of files to be read (Simstrat).
+#' @importFrom dplyr case_when mutate pull
+#' @importFrom readr read_csv
+#' @import ncdf4
 #'
 #' @examples
 #' \dontrun{
@@ -117,6 +119,11 @@ connect_output <- function(model, config_file, folder = ".") {
   })
   names(mods) <- model
   
+  chk <- sapply(mods, is.null)
+  if(all(chk)) {
+    stop("No output for ", paste0(model, collapse = ", "), " in '", folder, "'")
+  }
+  
   nc_mods <- c("GLM", "GOTM")[(c("GLM", "GOTM") %in% names(mods))]
   
   if(length(nc_mods) > 0) {
@@ -128,6 +135,8 @@ connect_output <- function(model, config_file, folder = ".") {
   return(mods)
 }
 
+#' @name close_nc
+#' @noRd
 close_nc <- function(con) {
   mods <- c("GLM", "GOTM")
   mods <- mods[which(mods %in% names(con))]
