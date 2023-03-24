@@ -18,11 +18,14 @@ inspect_output <- function(model, config_file) {
 
   # model <- c("FLake", "GLM", "GOTM", "Simstrat", "MyLake")
   
-  out <- connect_output(model = model, config_file = config_file)
-  # close_nc(out)
+
+  # on.exit({
+  #   LakeEnsemblR:::close_nc(out)
+  # })
   
   start <- as.Date(min(out[[1]]$Date))
   end <- as.Date(max(out[[1]]$Date))
+  cfg <- readLines(config_file)
   
   # lakename <- basename(lake_dir)
   
@@ -30,10 +33,15 @@ inspect_output <- function(model, config_file) {
   ui <- dashboardPage(
     dashboardHeader(title = "LakeEnsemblR"),
     dashboardSidebar(
-      # sidebarMenuOutput("menu")
+      sidebarMenu(
+        menuItem("Model output", tabName = "model_output"),
+        menuItem(text = "Configuration", tabName = "configuration")
+        # menuItem("Input", tabName = "input"),
+        # menuItem("LER output", tabName = "ler_output")
+      )
     ),
     dashboardBody(
-      tags$head(tags$style(HTML('
+      tags$head(tags$style(HTML("
         .skin-blue .main-header .logo {
                               background-color: #18188c;
                               }
@@ -43,58 +51,112 @@ inspect_output <- function(model, config_file) {
         .skin-blue .main-header .navbar {
         background-color: #18188c;
         }
-                              '))),
-      tabsetPanel(
-        tabPanel("Configuration"),
-        tabPanel("Input"),
-        tabPanel("Model output",
-                 fluidRow(
-                   column(3,
-                          radioButtons("model", label = "Model", choices = model),
-                          uiOutput("var_sel")
-                   ),
-                   column(9,
-                          # h4(lakename),
-                          plotOutput("plot2d", height = "700px"),
-                          sliderInput("xlim",
-                                      "Dates:",
-                                      min = start,
-                                      max = end,
-                                      value = c(start, end),
-                                      timeFormat="%Y-%m-%d", width = "100%")
-                          # dateRangeInput("xlim", "Date range", start = start, end = end, min = start, max = end, width = "100%")
-                   )
-                 )
+                              " ))),
+      tabItems(
+        tabItem(tabName = "configuration",
+                h2("Configuration"),
+                uiOutput("text"),
+                verbatimTextOutput("config_file")
+                ),
+        tabItem(tabName = "input",
+                h2("input")
+                ),
+        tabItem(tabName = "model_output",
+                fluidRow(
+                  column(3,
+                         actionButton("open_output", "Open model output"),
+                         uiOutput("model_sel"),
+                         uiOutput("var_sel"),
+                         conditionalPanel("input.open_output > 0",
+                                          actionButton("close_output", "Close output"))
+                  ),
+                  column(9,
+                         # h4(lakename),
+                         plotOutput("plot2d", height = "700px"),
+                         sliderInput("xlim",
+                                     "Dates:",
+                                     min = start,
+                                     max = end,
+                                     value = c(start, end),
+                                     timeFormat="%Y-%m-%d", width = "100%"),
+                         br(),
+                         p(tags$b("Table 1."), " List of model output variables."),
+                         tableOutput("model_vars")
+                         # dateRangeInput("xlim", "Date range", start = start, end = end, min = start, max = end, width = "100%")
+                  )
+                )
         ),
-        tabPanel("LER output")
+        tabItem(tabName = "ler_output",
+                h2("LER output")
+                )
       )
     )
   )
   
   server <- function(input, output, session) {
     
-    lst <- reactiveValues(var2d = NULL, var1d = NULL, plot2d = NULL, plot1d = NULL, ref_table = NULL)
+    lst <- reactiveValues(out = NULL, var1 = NULL, var1_lab = NULL, ref_table = NULL)
+    
+    observeEvent(input$open_output, {
+      lst$out <- connect_output(model = model, config_file = config_file)
+      for(m in model) {
+        lst$out[[m]]$ref_table <- model_var_dic[model_var_dic$model == m, ]
+      }
+    })
+    observeEvent(input$close_output, {
+      LakeEnsemblR:::close_nc(out)
+      for(i in names(lst)) {
+        lst[[i]] <- NULL
+      }
+    })
+    
+    output$model_sel <- renderUI({
+      req(!is.null(lst$out))
+      radioButtons("model", label = "Model", choices = names(lst$out))
+    })
     
     output$var_sel <- renderUI({
-      
-      choices <- lst$ref_table$var
-      selectInput("var1d", "Select variable", 
+      req(!is.null(lst$out))
+      choices <- lst$ref_table$longname[lst$ref_table$plot]
+      selectInput("var1", "Select variable", 
                   choices = choices)
-      
     })
+    
+    
     observeEvent(input$model, {
-      lst$var1d <- NULL
+      lst$var1 <- NULL
+      lst$ref_table <- out[[input$model]]$ref_table
+
     })
     
     observe({
       req(length(input$model) == 1)
-      lst$ref_table <- out[[input$model]]$ref_table
-      lst$var1d <- input$var1d
+      lst$var1 <- lst$ref_table$var[lst$ref_table$longname == input$var1]
+      lst$var1_lab <- paste0(lst$ref_table$longname[lst$ref_table$longname == input$var1],
+                             "\n[", lst$ref_table$units[lst$ref_table$longname == input$var1], "]")
     })
     
     output$plot2d <- renderPlot({
-      plot_raw(con = out, model = input$model, var = input$var1d, xlim = input$xlim)
+      validate(
+        need(!is.null(lst$out), "Click 'Open model output'")
+      )
+      validate(
+        need(length(lst$var1) == 1 & !is.null(lst$var1), "Select a variable.")
+      )
+      plot_raw(con = out, model = input$model, var = lst$var1, xlim = input$xlim, var_lab = lst$var1_lab)
     })
+    
+    output$model_vars <- renderTable({
+      validate(
+        need(!is.null(lst$out), "")
+      )
+      validate(
+        need(!is.null(lst$ref_table), "Select a model.")
+      )
+      lst$ref_table[lst$ref_table$plot, c("longname", "var", "units", "model")]
+    })
+    
+    output$config_file <- renderText(paste0(cfg, collapse = "\n"))
     
   }
   shinyApp(ui, server)
