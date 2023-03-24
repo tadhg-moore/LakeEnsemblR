@@ -8,7 +8,7 @@ FLake,Q_se,Sensible heat flux,W/m2,3,Flake/output/output.dat,TRUE
 FLake,Q_la,Latent heat flux,W/m2,3,Flake/output/output.dat,TRUE
 FLake,C_T,Shape factor with respect to the temperature profile in the thermocline,,3,Flake/output/output.dat,TRUE
 FLake,Wconv,Convective velocity scale,m/s,3,Flake/output/output.dat,TRUE
-FLake,Qw,NA,NA,3,Flake/output/output.dat,TRUE
+FLake,Qw,Inflow heat exchange [uncertain],W/m2,3,Flake/output/output.dat,TRUE
 FLake,I_w,Short wave radiation,W/m2,3,Flake/output/output.dat,TRUE
 FLake,Q_lwa,Long wave radiative flux from the atmosphere,W/m2,3,Flake/output/output.dat,TRUE
 FLake,Q_lww,Long wave radiative flux from the water,W/m2,3,Flake/output/output.dat,TRUE
@@ -22,21 +22,21 @@ FLake,ufr_a,Friction velocity in air,m/s,3,Flake/output/output.dat,TRUE
 FLake,ufr_w,Friction velocity in surface water,m/s,3,Flake/output/output.dat,TRUE
 FLake,No,Sequential number time,,1,Flake/output/output.dat,FALSE
 FLake,time,Time,,1,Flake/output/output.dat,FALSE
-GLM,salt,salinity,g/kg,4,GLM/output/output.nc,TRUE
 GLM,temp,temperature,celsius,4,GLM/output/output.nc,TRUE
 GLM,rho,density,unknown,4,GLM/output/output.nc,TRUE
 GLM,V,layer volume,m3,4,GLM/output/output.nc,TRUE
+GLM,evap,evaporation,m/s,3,GLM/output/output.nc,TRUE
+GLM,precip,precipitation,m/s,3,GLM/output/output.nc,TRUE
+GLM,Tot_V,lake volume,m3,3,GLM/output/output.nc,TRUE
+GLM,hice,Height of Ice,meters,3,GLM/output/output.nc,TRUE
+GLM,salt,salinity,g/kg,4,GLM/output/output.nc,TRUE
 GLM,rad,solar radiation,unknown,4,GLM/output/output.nc,TRUE
 GLM,extc_coef,extc_coef,unknown,4,GLM/output/output.nc,TRUE
 GLM,u_mean,mean velocity,m/s,4,GLM/output/output.nc,TRUE
 GLM,u_orb,orbital velocity,m/s,4,GLM/output/output.nc,TRUE
 GLM,Taub,layer stress,N/m2,4,GLM/output/output.nc,TRUE
-GLM,hice,Height of Ice,meters,3,GLM/output/output.nc,TRUE
 GLM,hsnow,Height of Snow,meters,3,GLM/output/output.nc,TRUE
 GLM,avg_surf_temp,Running average surface temperature,celsius,3,GLM/output/output.nc,TRUE
-GLM,precip,precipitation,m/s,3,GLM/output/output.nc,TRUE
-GLM,evap,evaporation,m/s,3,GLM/output/output.nc,TRUE
-GLM,Tot_V,lake volume,m3,3,GLM/output/output.nc,TRUE
 GLM,I_0,Shortwave,10E-6m,3,GLM/output/output.nc,TRUE
 GLM,wind,wind,m/s,3,GLM/output/output.nc,TRUE
 GLM,hwice,Height of WhiteIce,meters,3,GLM/output/output.nc,TRUE
@@ -51,20 +51,6 @@ GOTM,Qres,residual water balance inflows,m3/s,4,GOTM/output/output.nc,TRUE
 GOTM,rad,shortwave radiation,W/m2,4,GOTM/output/output.nc,TRUE
 GOTM,temp_obs,observed temperature,Celsius,4,GOTM/output/output.nc,TRUE
 GOTM,salt_obs,observed salinity,psu,4,GOTM/output/output.nc,TRUE
-GOTM,h,layer thickness,m,4,GOTM/output/output.nc,TRUE
-GOTM,tke,turbulent kinetic energy,m2/s2,4,GOTM/output/output.nc,TRUE
-GOTM,eps,energy dissipation rate,m2/s3,4,GOTM/output/output.nc,TRUE
-GOTM,num,turbulent diffusivity of momentum,m2/s,4,GOTM/output/output.nc,TRUE
-GOTM,nuh,turbulent diffusivity of heat,m2/s,4,GOTM/output/output.nc,TRUE
-GOTM,nus,turbulent diffusivity of salt,m2/s,4,GOTM/output/output.nc,TRUE
-GOTM,SS,shear frequency squared,1/s2,4,GOTM/output/output.nc,TRUE
-GOTM,P,shear production,m2/s3,4,GOTM/output/output.nc,TRUE
-GOTM,NN,buoyancy frequency squared,1/s2,4,GOTM/output/output.nc,TRUE
-GOTM,buoy,buoyancy,m/s2,4,GOTM/output/output.nc,TRUE
-GOTM,avh,eddy diffusivity,m2/s,4,GOTM/output/output.nc,TRUE
-GOTM,bioshade,fraction of visible light that is not shaded by overlying biogeochemistry,-,4,GOTM/output/output.nc,TRUE
-GOTM,Qs,salt inflow,1/s,4,GOTM/output/output.nc,TRUE
-GOTM,Af,hypsograph at grid interfaces,m^2,4,GOTM/output/output.nc,TRUE
 GOTM,precip,precipitation,m/s,3,GOTM/output/output.nc,TRUE
 GOTM,evap,evaporation,m/s,3,GOTM/output/output.nc,TRUE
 GOTM,qh,sensible heat flux,W/m2,3,GOTM/output/output.nc,TRUE
@@ -100,6 +86,20 @@ GOTM,int_swr,integrated short wave radiation,J/m2,3,GOTM/output/output.nc,TRUE
 GOTM,int_heat,integrated surface heat fluxes,J/m2,3,GOTM/output/output.nc,TRUE
 GOTM,int_total,integrated total surface heat exchange,J/m2,3,GOTM/output/output.nc,TRUE
 GOTM,I_0,incoming short wave radiation,W/m2,3,GOTM/output/output.nc,TRUE
+GOTM,h,layer thickness,m,4,GOTM/output/output.nc,TRUE
+GOTM,tke,turbulent kinetic energy,m2/s2,4,GOTM/output/output.nc,TRUE
+GOTM,eps,energy dissipation rate,m2/s3,4,GOTM/output/output.nc,TRUE
+GOTM,num,turbulent diffusivity of momentum,m2/s,4,GOTM/output/output.nc,TRUE
+GOTM,nuh,turbulent diffusivity of heat,m2/s,4,GOTM/output/output.nc,TRUE
+GOTM,nus,turbulent diffusivity of salt,m2/s,4,GOTM/output/output.nc,TRUE
+GOTM,SS,shear frequency squared,1/s2,4,GOTM/output/output.nc,TRUE
+GOTM,P,shear production,m2/s3,4,GOTM/output/output.nc,TRUE
+GOTM,NN,buoyancy frequency squared,1/s2,4,GOTM/output/output.nc,TRUE
+GOTM,buoy,buoyancy,m/s2,4,GOTM/output/output.nc,TRUE
+GOTM,avh,eddy diffusivity,m2/s,4,GOTM/output/output.nc,TRUE
+GOTM,bioshade,fraction of visible light that is not shaded by overlying biogeochemistry,-,4,GOTM/output/output.nc,TRUE
+GOTM,Qs,salt inflow,1/s,4,GOTM/output/output.nc,TRUE
+GOTM,Af,hypsograph at grid interfaces,m^2,4,GOTM/output/output.nc,TRUE
 GOTM,Epot,potential energy,J,3,GOTM/output/output.nc,TRUE
 GOTM,Eturb,turbulent kinetic energy,J,3,GOTM/output/output.nc,TRUE
 GOTM,sst_obs,observed sea surface temperature,Celsius,3,GOTM/output/output.nc,TRUE
@@ -155,36 +155,36 @@ GOTM,dHis,ice growth (surface),m,3,GOTM/output/output.nc,FALSE
 GOTM,dHib,ice growth (bottom),m,3,GOTM/output/output.nc,FALSE
 GOTM,mld_bott,bottom mixed layer depth,m,3,GOTM/output/output.nc,FALSE
 GOTM,Ekin,kinetic energy,J,3,GOTM/output/output.nc,FALSE
-MyLake,Tzt,Temperature,Celsius,4,NA,TRUE
-MyLake,Chlzt,Chlorophyll,mg/m3,4,NA,TRUE
-MyLake,PPzt,Phosphorus bound to inorganic particles,mg/m3,4,NA,TRUE
-MyLake,DOPzt,Dissolved organic phosphorus,mg/m3,4,NA,TRUE
-MyLake,DOCzt,Dissolved organic carbon,mg/m3,4,NA,TRUE
-MyLake,zz,Depth,m,1,NA,FALSE
-MyLake,Az,Area,Area,1,NA,FALSE
-MyLake,,NA,NA,NA,NA,FALSE
-MyLake,tt,Time,s,1,NA,FALSE
-MyLake,Qst,Estimated surface heat fluxes,W/m2,3,NA,FALSE
-MyLake,Kzt,Predicted vertical diffusion coefficient,m2/day,4,NA,FALSE
-MyLake,Czt,Passive tracer,,4,NA,FALSE
-MyLake,Szt,Passive sedimenting tracer,kg/m3,4,NA,FALSE
-MyLake,Pzt,Dissolved inorganic phosphorus,mg/m3,4,NA,FALSE
-MyLake,Qzt_sed,Sediment-water heat flux,W/m2,4,NA,FALSE
-MyLake,lambdazt,Average total light attenuation coefficient,m-1,4,NA,FALSE
-MyLake,P3zt_sed,"P conc. in sediment for P, PP and Chl",NA,NA,NA,FALSE
-MyLake,P3zt_sed_sc,"P source from sediment for P, PP and Chl",NA,NA,NA,FALSE
-MyLake,His,Ice information matrix,NA,NA,NA,FALSE
-MyLake,DoF,Days of freezing,model timestep number,NA,NA,FALSE
-MyLake,DoM,Days of melting,model timestep number,NA,NA,FALSE
-MyLake,MixStat,Temporary variables used in model testing,NA,NA,NA,FALSE
-MyLake,Wt,Weather data,NA,NA,NA,FALSE
-MyLake,w_chl_zt,Chlorophyll sinking velocity,,4,NA,FALSE
+MyLake,Tzt,Temperature,Celsius,4,MyLake/output/output.Rdata,TRUE
+MyLake,Chlzt,Chlorophyll,mg/m3,4,MyLake/output/output.Rdata,TRUE
+MyLake,PPzt,Phosphorus bound to inorganic particles,mg/m3,4,MyLake/output/output.Rdata,TRUE
+MyLake,DOPzt,Dissolved organic phosphorus,mg/m3,4,MyLake/output/output.Rdata,TRUE
+MyLake,DOCzt,Dissolved organic carbon,mg/m3,4,MyLake/output/output.Rdata,TRUE
+MyLake,zz,Depth,m,1,MyLake/output/output.Rdata,FALSE
+MyLake,Az,Area,Area,1,MyLake/output/output.Rdata,FALSE
+MyLake,unknown,unknown,NA,NA,MyLake/output/output.Rdata,FALSE
+MyLake,tt,Time,s,1,MyLake/output/output.Rdata,FALSE
+MyLake,Qst,Estimated surface heat fluxes,W/m2,3,MyLake/output/output.Rdata,FALSE
+MyLake,Kzt,Predicted vertical diffusion coefficient,m2/day,4,MyLake/output/output.Rdata,FALSE
+MyLake,Czt,Passive tracer,,4,MyLake/output/output.Rdata,FALSE
+MyLake,Szt,Passive sedimenting tracer,kg/m3,4,MyLake/output/output.Rdata,FALSE
+MyLake,Pzt,Dissolved inorganic phosphorus,mg/m3,4,MyLake/output/output.Rdata,FALSE
+MyLake,Qzt_sed,Sediment-water heat flux,W/m2,4,MyLake/output/output.Rdata,FALSE
+MyLake,lambdazt,Average total light attenuation coefficient,m-1,4,MyLake/output/output.Rdata,FALSE
+MyLake,P3zt_sed,"P conc. in sediment for P, PP and Chl",NA,NA,MyLake/output/output.Rdata,FALSE
+MyLake,P3zt_sed_sc,"P source from sediment for P, PP and Chl",NA,NA,MyLake/output/output.Rdata,FALSE
+MyLake,His,Ice information matrix,NA,NA,MyLake/output/output.Rdata,FALSE
+MyLake,DoF,Days of freezing,model timestep number,NA,MyLake/output/output.Rdata,FALSE
+MyLake,DoM,Days of melting,model timestep number,NA,MyLake/output/output.Rdata,FALSE
+MyLake,MixStat,Temporary variables used in model testing,NA,NA,MyLake/output/output.Rdata,FALSE
+MyLake,Wt,Weather data,NA,NA,MyLake/output/output.Rdata,FALSE
+MyLake,w_chl_zt,Chlorophyll sinking velocity,,4,MyLake/output/output.Rdata,FALSE
 Simstrat,T,Temperature ,Celsius,4,Simstrat/output/T_out.dat,TRUE
 Simstrat,S,Salinity,g/kg,4,Simstrat/output/S_out.dat,TRUE
 Simstrat,B,Production rate of buoyancy,W/kg,4,Simstrat/output/B_out.dat,TRUE
 Simstrat,eps,Dissipation rate of turbulent kinetic energy,W/kg,4,Simstrat/output/eps_out.dat,TRUE
 Simstrat,k,Turbulent kinetic energy,J/kg,4,Simstrat/output/k_out.dat,TRUE
-Simstrat,NN,Brunt-Väisälä frequency (stratification coefficient),s-2,4,Simstrat/output/NN_out.dat,TRUE
+Simstrat,NN,Brunt-Vaisala frequency (stratification coefficient),s-2,4,Simstrat/output/NN_out.dat,TRUE
 Simstrat,nuh,Turbulent diffusivity of temperature ,J s/kg,4,Simstrat/output/nuh_out.dat,TRUE
 Simstrat,num,Turbulent diffusivity of momentum,m2/s,4,Simstrat/output/num_out.dat,TRUE
 Simstrat,P,Production rate of shear stress,W/kg,4,Simstrat/output/P_out.dat,TRUE
@@ -192,8 +192,8 @@ Simstrat,Ps,Production rate of seiche energy,W/kg,4,Simstrat/output/Ps_out.dat,T
 Simstrat,Qvert,Vertical advection,m3/s,4,Simstrat/output/Qvert_out.dat,TRUE
 Simstrat,HA,Long-wave radiation from sky ,W/m-2,3,Simstrat/output/HA_out.dat,TRUE
 Simstrat,HK,Long-wave radiation from water,W/m-2,3,Simstrat/output/HK_out.dat,TRUE
-Simstrat,HV,Sensible heat flux,W/m-3,3,Simstrat/output/HV_out.dat,TRUE
-Simstrat,HW,Latent heat flux,W/m-4,3,Simstrat/output/HW_out.dat,TRUE
+Simstrat,HV,Sensible heat flux,W/m-2,3,Simstrat/output/HV_out.dat,TRUE
+Simstrat,HW,Latent heat flux,W/m-2,3,Simstrat/output/HW_out.dat,TRUE
 Simstrat,TotalIceH,Total ice thickness,m,3,Simstrat/output/TotalIceH_out.dat,TRUE
 Simstrat,Rad0,Solar radiation penetrating lake ,W/m-2,3,Simstrat/output/Rad0_out.dat,TRUE
 Simstrat,SnowH,Snow thickness,m,3,Simstrat/output/SnowH_out.dat,TRUE
