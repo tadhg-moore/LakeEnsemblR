@@ -70,7 +70,7 @@ inspect_output <- function(model, config_file) {
                   ),
                   column(9,
                          # h4(lakename),
-                         plotOutput("plot2d", height = "700px"),
+                         plotOutput("plot2d", height = "400px"),
                          uiOutput("date_slider"),
                          br(),
                          p(tags$b("Table 1."), " List of model output variables."),
