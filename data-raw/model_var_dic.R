@@ -46,4 +46,20 @@ write.csv(df, "data-raw/model_var_dic_draft.csv", row.names = FALSE)
 
 model_var_dic <- read.csv("data-raw/model_var_dic.csv")
 model_var_dic
+write.csv(model_var_dic, "data-raw/model_var_dic_draft_v1.csv",
+          row.names = FALSE)
+
+glm_csv <- data.frame(model = "GLM", var = names(out$GLM$out[-c(1, ncol(out$GLM$out))]),
+                      longname = names(out$GLM$out[-c(1, ncol(out$GLM$out))]),
+                      units = NA, dims = 3, file = "GLM/output/lake.csv", plot = TRUE)
+
+df <- model_var_dic %>% 
+  dplyr::full_join(glm_csv)
+write.csv(df, "data-raw/model_var_dic_draft_v2.csv",
+          row.names = FALSE)
+
+# Edit manually and save as model_var_dic.csv
+model_var_dic <- read.csv("data-raw/model_var_dic.csv")
+model_var_dic
+
 usethis::use_data(model_var_dic, overwrite = TRUE)

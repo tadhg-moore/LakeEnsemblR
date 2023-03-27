@@ -75,6 +75,13 @@ connect_output <- function(model, config_file, folder = ".") {
       lyrs <- ncdf4::ncvar_get(nc, "z")
       lyrs[lyrs > 1000000] <- NA
       lst$layers <- apply(lyrs, 2, \(x) {diff(c(0, x))})
+      nml_file <- file.path(folder, m, "glm3.nml")
+      csv_lake_fname <- suppressWarnings(glmtools::get_nml_value(arg_name = "csv_lake_fname", nml_file = nml_file))
+      csv_lake_file <- file.path(m, "output", paste0(csv_lake_fname, ".csv"))
+      if(file.exists(out_file)) {
+        lst$out <- readr::read_csv(csv_lake_file, show_col_types = FALSE)
+        lst$out$Date <- as.Date(lst$out$time)
+      }
     } else if(m == "GOTM") {
       out.steps <- ncdf4::ncvar_get(nc, "time")
       date.start <- ncdf4::ncatt_get(nc,'time','units')$value %>%

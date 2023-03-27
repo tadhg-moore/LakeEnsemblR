@@ -23,8 +23,10 @@ FLake,ufr_w,Friction velocity in surface water,m/s,3,Flake/output/output.dat,TRU
 FLake,No,Sequential number time,,1,Flake/output/output.dat,FALSE
 FLake,time,Time,,1,Flake/output/output.dat,FALSE
 GLM,temp,temperature,celsius,4,GLM/output/output.nc,TRUE
-GLM,rho,density,unknown,4,GLM/output/output.nc,TRUE
-GLM,V,layer volume,m3,4,GLM/output/output.nc,TRUE
+GLM,Daily Qsw,Daily Short Wave Radiation,W/m2,3,GLM/output/lake.csv,TRUE
+GLM,Daily Qe,Daily Latent Heat,W/m2,3,GLM/output/lake.csv,TRUE
+GLM,Daily Qh,Daily Sensible Heat,W/m2,3,GLM/output/lake.csv,TRUE
+GLM,Daily Qlw,Daily Long Wave Radiation,W/m2,3,GLM/output/lake.csv,TRUE
 GLM,evap,evaporation,m/s,3,GLM/output/output.nc,TRUE
 GLM,precip,precipitation,m/s,3,GLM/output/output.nc,TRUE
 GLM,Tot_V,lake volume,m3,3,GLM/output/output.nc,TRUE
@@ -37,11 +39,44 @@ GLM,u_orb,orbital velocity,m/s,4,GLM/output/output.nc,TRUE
 GLM,Taub,layer stress,N/m2,4,GLM/output/output.nc,TRUE
 GLM,hsnow,Height of Snow,meters,3,GLM/output/output.nc,TRUE
 GLM,avg_surf_temp,Running average surface temperature,celsius,3,GLM/output/output.nc,TRUE
+GLM,rho,density,unknown,4,GLM/output/output.nc,TRUE
+GLM,V,layer volume,m3,4,GLM/output/output.nc,TRUE
 GLM,I_0,Shortwave,10E-6m,3,GLM/output/output.nc,TRUE
 GLM,wind,wind,m/s,3,GLM/output/output.nc,TRUE
 GLM,hwice,Height of WhiteIce,meters,3,GLM/output/output.nc,TRUE
-GLM,NS,Number of Layers,,3,GLM/output/output.nc,TRUE
+GLM,NS,Number of Layers,-,3,GLM/output/output.nc,TRUE
 GLM,restart_variables,"dep_mx,prev_thick,g_prime_two_layer,energy_avail_max,mass_epi,old_slope,time_end_shear,time_start_shear,time_count_end,time_count_sim,half_seiche_period,thermocline_height,f0, fsum,u_f,u0,u_avg",various,1,GLM/output/output.nc,FALSE
+GLM,Tot Inflow Vol,Total Daily Inflow,m3,3,GLM/output/lake.csv,TRUE
+GLM,Tot Outflow Vol,Total Daily Outflow,m3,3,GLM/output/lake.csv,TRUE
+GLM,Overflow Vol,Total Daily Overflow,m3,3,GLM/output/lake.csv,TRUE
+GLM,Evaporation,Evaporation,m3,3,GLM/output/lake.csv,TRUE
+GLM,Rain,Rain,m3,3,GLM/output/lake.csv,TRUE
+GLM,Local Runoff,Local Runoff,m3,3,GLM/output/lake.csv,TRUE
+GLM,Snowfall,Snowfall,m3,3,GLM/output/lake.csv,TRUE
+GLM,Lake Level,Lake Level,m,3,GLM/output/lake.csv,TRUE
+GLM,Surface Area,Surface Area,m2,3,GLM/output/lake.csv,TRUE
+GLM,Blue Ice Thickness,Blue Ice Thickness,m,3,GLM/output/lake.csv,TRUE
+GLM,Snow Thickness,Snow Thickness,m,3,GLM/output/lake.csv,TRUE
+GLM,Snow Density,Density of snow layer,kg/m3,3,GLM/output/lake.csv,TRUE
+GLM,White Ice Thickness,White Ice Thickness,m,3,GLM/output/lake.csv,TRUE
+GLM,Albedo,Daily surface albedo,-,3,GLM/output/lake.csv,TRUE
+GLM,Max Temp,Max Temp,celsius,3,GLM/output/lake.csv,TRUE
+GLM,Min Temp,Min Temp,celsius,3,GLM/output/lake.csv,TRUE
+GLM,Surface Temp,Surface Temp,celsius,3,GLM/output/lake.csv,TRUE
+GLM,Light,Photosynthetically active radiation,W/m2,3,GLM/output/lake.csv,TRUE
+GLM,Benthic Light,Benthic Light,W/m2,3,GLM/output/lake.csv,TRUE
+GLM,Volume,Volume,m3,3,GLM/output/lake.csv,TRUE
+GLM,Vol Snow,Vol Snow,m3,3,GLM/output/lake.csv,TRUE
+GLM,Vol Blue Ice,Vol Blue Ice,m3,3,GLM/output/lake.csv,TRUE
+GLM,Vol White Ice,Vol White Ice,m3,3,GLM/output/lake.csv,TRUE
+GLM,Surface Wave Height,Surface Wave Height,m,3,GLM/output/lake.csv,FALSE
+GLM,Surface Wave Length,Surface Wave Length,m,3,GLM/output/lake.csv,FALSE
+GLM,Surface Wave Period,Surface Wave Period,unknown,3,GLM/output/lake.csv,FALSE
+GLM,LakeNumber,Lake Number,-,3,GLM/output/lake.csv,TRUE
+GLM,Max dT/dz,Max dT/dz,celsius,3,GLM/output/lake.csv,TRUE
+GLM,CD,Bulk aerodynamic transfer coefficient for momentum,-,3,GLM/output/lake.csv,FALSE
+GLM,CHE,Bulk aerodynamic transfer coefficient for heat exchange,-,3,GLM/output/lake.csv,FALSE
+GLM,z/L,Daily atmospheric stability,unknown,3,GLM/output/lake.csv,TRUE
 GOTM,temp,potential temperature,Celsius,4,GOTM/output/output.nc,TRUE
 GOTM,salt,salinity,g/kg,4,GOTM/output/output.nc,TRUE
 GOTM,rho,potential density,kg/m3,4,GOTM/output/output.nc,TRUE
@@ -71,8 +106,8 @@ GOTM,ea,actual water vapor presure,Pa,3,GOTM/output/output.nc,TRUE
 GOTM,qs,saturation specific humidity,kg/kg,3,GOTM/output/output.nc,TRUE
 GOTM,qa,specific humidity,kg/kg,3,GOTM/output/output.nc,TRUE
 GOTM,rhoa,air density,kg/m3,3,GOTM/output/output.nc,TRUE
-GOTM,cloud,cloud cover,,3,GOTM/output/output.nc,TRUE
-GOTM,albedo,albedo,,3,GOTM/output/output.nc,TRUE
+GOTM,cloud,cloud cover,-,3,GOTM/output/output.nc,TRUE
+GOTM,albedo,albedo,-,3,GOTM/output/output.nc,TRUE
 GOTM,Q_outflow,stream (Q): outflow,m3/s,3,GOTM/output/output.nc,TRUE
 GOTM,Q_inflow_2,stream (Q): inflow_2,m3/s,3,GOTM/output/output.nc,TRUE
 GOTM,T_inflow_2,stream (T): inflow_2,Celsius,3,GOTM/output/output.nc,TRUE

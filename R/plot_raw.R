@@ -27,24 +27,30 @@ plot_raw <- function(con, model, var, xlim = NULL, zlim = NULL, var_lab = NULL) 
   if(model == "FLake") {
     df <- data.frame(Date = con[[model]][["Date"]], value = con[[model]][["out"]][[var]])
   } else if(model %in% c("GLM", "GOTM")) {
-    mat <- ncdf4::ncvar_get(con[[model]][["nc"]], varid = var)
-    
-    if(length(dim(mat)) == 2) {
-      if(nrow(mat) > nrow(con[[model]][["layers"]])) {
-        layers <- ncdf4::ncvar_get(con[[model]][["nc"]], varid = "zi")
-        layers <- apply(layers, 2, \(x){diff(c(x, 0))})
-        layers[nrow(layers), ] <- layers[1, ]
-      } else {
-        layers <- as.matrix(con[[model]][["layers"]])
-      }
+    idx <- which(con[[model]][["ref_table"]][["var"]] == var)
+    out_file <- basename(con[[model]][["ref_table"]][["file"]][idx])
+    if(out_file == "lake.csv") {
+      df <- data.frame(Date = con[[model]][["out"]][["Date"]], value = con[[model]][["out"]][[var]])
+    } else if(out_file == "output.nc") {
+      mat <- ncdf4::ncvar_get(con[[model]][["nc"]], varid = var)
       
-      depth <- apply(layers, 2, \(x) {cumsum(c(x))})
-      df <- data.frame(Date = rep(con[[model]][["Date"]], each = nrow(mat)), 
-                       depth = c(depth),
-                       lyr_thk = c(layers), value = c(mat)) %>% 
-        na.exclude()
-    } else if(length(dim(mat)) == 1) {
-      df <- data.frame(Date = con[[model]][["Date"]], value = c(mat))
+      if(length(dim(mat)) == 2) {
+        if(nrow(mat) > nrow(con[[model]][["layers"]])) {
+          layers <- ncdf4::ncvar_get(con[[model]][["nc"]], varid = "zi")
+          layers <- apply(layers, 2, \(x){diff(c(x, 0))})
+          layers[nrow(layers), ] <- layers[1, ]
+        } else {
+          layers <- as.matrix(con[[model]][["layers"]])
+        }
+        
+        depth <- apply(layers, 2, \(x) {cumsum(c(x))})
+        df <- data.frame(Date = rep(con[[model]][["Date"]], each = nrow(mat)), 
+                         depth = c(depth),
+                         lyr_thk = c(layers), value = c(mat)) %>% 
+          na.exclude()
+      } else if(length(dim(mat)) == 1) {
+        df <- data.frame(Date = con[[model]][["Date"]], value = c(mat))
+      }
     }
   } else if(model == "Simstrat") {
     file <- con[[model]][["ref_table"]][["file"]][con[[model]][["ref_table"]][["var"]] == var]
