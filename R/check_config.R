@@ -53,19 +53,19 @@ check_master_config <- function(config_file,
                   gotmtools::get_yaml_value(config_file, "config_files", "GLM"),
                   " is not existing"))
     }
-    if(!file.exists(get_yaml_value(config_file, "config_files", "Simstrat")) &&
+    if(!file.exists(gotmtools::get_yaml_value(config_file, "config_files", "Simstrat")) &&
        "Simstrat" %in% model) {
       stop(paste0("Simstrat control file ",
                   gotmtools::get_yaml_value(config_file, "config_files", "Simstrat"),
                   " is not existing"))
     }
-    if(!file.exists(get_yaml_value(config_file, "config_files", "FLake")) &&
+    if(!file.exists(gotmtools::get_yaml_value(config_file, "config_files", "FLake")) &&
        "FLake" %in% model) {
       stop(paste0("FLake control file ",
                   gotmtools::get_yaml_value(config_file, "config_files", "FLake"),
                   " is not existing"))
     }
-    if(!file.exists(get_yaml_value(config_file, "config_files", "MyLake")) &&
+    if(!file.exists(gotmtools::get_yaml_value(config_file, "config_files", "MyLake")) &&
        "MyLake" %in% model) {
       stop(paste0("MyLake control file ",
                   gotmtools::get_yaml_value(config_file, "config_files", "MyLake"),
@@ -95,21 +95,21 @@ check_master_config <- function(config_file,
   good_method <- c("point", "mean", "integrated")
   if(!time_method %in% good_method) {
     stop(paste0('Unknown output time variable "', time_method, '" in control file ', config_file,
-                ". Allowed units: ", paste0(good_umethod, collapse = ", ")))
+                ". Allowed units: ", paste0(good_method, collapse = ", ")))
   }
   
   # check if the same number of in-/outflow scaling factors are given
   #   as the number of in-/outflows
   configr_master_config <- configr::read.config(file.path(config_file))
-  use_inflows <- get_yaml_value(config_file, label = "inflows", key = "use")
-  tryCatch({get_yaml_value(config_file, "inflows", "mass-balance")
+  use_inflows <- gotmtools::get_yaml_value(config_file, label = "inflows", key = "use")
+  tryCatch({gotmtools::get_yaml_value(config_file, "inflows", "mass-balance")
     warning(paste0("The 'mass-balance' argument is no longer used after ",
                    "version 1.1. If you would like to have outflows ",
                    "matching the inflows, please add the inflow file ",
                    "manually to the 'outflows' section. You can use the same ",
                    "or a different file as for inflows."))},
     error = function(e) { })
-  use_outflows <- get_yaml_value(config_file, label = "outflows", key = "use")
+  use_outflows <- gotmtools::get_yaml_value(config_file, label = "outflows", key = "use")
   
   if(!is.null(configr_master_config[["scaling_factors"]][["all"]]
               [["inflow"]]) & use_inflows){
