@@ -24,10 +24,12 @@ inspect_output <- function(model, config_file) {
   # })
   
   cfg <- readLines(config_file)
-  
+  yaml <- configr::read.config(config_file)
+
   # lakename <- basename(lake_dir)
   
   # ref_table <- nc[[model]]$ref_table
+  # UI ----
   ui <- dashboardPage(
     dashboardHeader(title = "LakeEnsemblR"),
     dashboardSidebar(
@@ -49,10 +51,17 @@ inspect_output <- function(model, config_file) {
         .skin-blue .main-header .navbar {
         background-color: #18188c;
         }
+        .shinytime-hours , .shinytime-mins , .shinytime-secs {
+        padding-right: 6px;
+        }
                               " ))),
       tabItems(
         tabItem(tabName = "configuration",
                 h2("Configuration"),
+                uiOutput("ler_ui"),
+                actionButton("save_yaml", "Save file", icon = icon("save")),
+                br(),
+
                 uiOutput("text"),
                 verbatimTextOutput("config_file")
                 ),
@@ -75,7 +84,6 @@ inspect_output <- function(model, config_file) {
                          br(),
                          p(tags$b("Table 1."), " List of model output variables."),
                          tableOutput("model_vars")
-                         # dateRangeInput("xlim", "Date range", start = start, end = end, min = start, max = end, width = "100%")
                   )
                 )
         ),
@@ -166,6 +174,49 @@ inspect_output <- function(model, config_file) {
     
     output$config_file <- renderText(paste0(cfg, collapse = "\n"))
     
+    # Render LER yaml file to UI elements ----
+    output$ler_ui <- renderUI({
+      yaml_to_ui(config_file = config_file)
+    })
+    
+    observeEvent(input$save_yaml, {
+      ui_id <- get_ui_id(config_file = config_file)
+      lst <- strsplit(ui_id, "/")
+      ui_id <- gsub("/", "_", ui_id)
+      unlist(lapply(lst, length))
+      for(i in seq_along(lst)) {
+        if(lst[[i]][[2]] %in% c("start", "stop")) {
+          yaml$time$start <- paste(input[["time_start_date"]], 
+                                   format(input[["time_start_time"]], "%H:%M:%S"))
+          yaml$time$stop <- paste(input[["time_stop_date"]], 
+                                  format(input[["time_stop_time"]], "%H:%M:%S"))
+        } else {
+          if(length(input[[ui_id[i]]]) > 1) {
+            inp <- input[[ui_id[i]]]
+          } else if(input[[ui_id[i]]] %in% c("TRUE", "FALSE")) {
+            inp <- as.logical(input[[ui_id[i]]])
+          } else if(input[[ui_id[i]]] == "") {
+            inp <- "NULL"
+          } else {
+            inp <- input[[ui_id[i]]]
+          }
+          print(inp)
+          if(length(lst[[i]]) == 2) {
+            yaml[[lst[[i]][1]]][[lst[[i]][2]]] <- inp
+          } else if(length(lst[[i]]) == 3) {
+            print(lst[[i]])
+            yaml[[lst[[i]][1]]][[lst[[i]][2]]][[lst[[i]][3]]] <- inp
+          } else if(length(lst[[i]]) == 4) {
+            yaml[[lst[[i]][1]]][[lst[[i]][2]]][[lst[[i]][3]]][[lst[[i]][4]]] <- inp
+          }
+        }
+      }
+      
+      
+      write_yaml(yaml = yaml, file = config_file)
+      
+    })
+
   }
   shinyApp(ui, server)
 }
