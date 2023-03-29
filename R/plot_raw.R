@@ -25,11 +25,17 @@ plot_raw <- function(con, model, var, xlim = NULL, zlim = NULL, var_lab = NULL) 
   require(readr)
   
   if(model == "FLake") {
+    if(is.null(con[[model]][["out"]])) {
+      return(NULL)
+    }
     df <- data.frame(Date = con[[model]][["Date"]], value = con[[model]][["out"]][[var]])
   } else if(model %in% c("GLM", "GOTM")) {
     idx <- which(con[[model]][["ref_table"]][["var"]] == var)
     out_file <- basename(con[[model]][["ref_table"]][["file"]][idx])
     if(out_file == "lake.csv") {
+      if(is.null(con[[model]][["out"]])) {
+        return(NULL)
+      }
       df <- data.frame(Date = con[[model]][["out"]][["Date"]], value = con[[model]][["out"]][[var]])
     } else if(out_file == "output.nc") {
       mat <- ncdf4::ncvar_get(con[[model]][["nc"]], varid = var)
@@ -54,6 +60,9 @@ plot_raw <- function(con, model, var, xlim = NULL, zlim = NULL, var_lab = NULL) 
     }
   } else if(model == "Simstrat") {
     file <- con[[model]][["ref_table"]][["file"]][con[[model]][["ref_table"]][["var"]] == var]
+    if(!file.exists(file)) {
+      return(NULL)
+    }
     mat <- readr::read_csv(file, show_col_types = FALSE, col_select = -1, col_names = FALSE, skip = 1)
     if(ncol(mat) == 1) {
       df <- data.frame(Date = con[[model]][["Date"]], value = unlist(mat))
@@ -71,6 +80,9 @@ plot_raw <- function(con, model, var, xlim = NULL, zlim = NULL, var_lab = NULL) 
       
     }
   } else if(model == "MyLake") {
+    if(is.null(con[[model]][["out"]])) {
+      return(NULL)
+    }
     mat <- con[[model]][["out"]][[var]]
     mat <- mat[nrow(mat):1, ]
     depth <- as.matrix(con[[model]][["layers"]])
