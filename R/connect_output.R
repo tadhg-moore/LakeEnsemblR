@@ -61,7 +61,7 @@ connect_output <- function(model, config_file, folder = ".") {
       met_file <- file.path(folder, m, met_file)
       met_file <- gsub(",", "", met_file)
       
-      out_hour <- lubridate::hour(get_yaml_value(config_file, "time", "start"))
+      out_hour <- lubridate::hour(gotmtools::get_yaml_value(config_file, "time", "start"))
       
       met <- read.delim(met_file, header = FALSE)
       lst$Date <- as.Date(as.POSIXct(met[, ncol(met)], tz = "UTC") + (out_hour * 60 * 60))
@@ -78,7 +78,7 @@ connect_output <- function(model, config_file, folder = ".") {
       nml_file <- file.path(folder, m, "glm3.nml")
       csv_lake_fname <- suppressWarnings(glmtools::get_nml_value(arg_name = "csv_lake_fname", nml_file = nml_file))
       csv_lake_file <- file.path(m, "output", paste0(csv_lake_fname, ".csv"))
-      if(file.exists(out_file)) {
+      if(file.exists(csv_lake_file)) {
         lst$out <- readr::read_csv(csv_lake_file, show_col_types = FALSE)
         lst$out$Date <- as.Date(lst$out$time)
       }
@@ -92,7 +92,7 @@ connect_output <- function(model, config_file, folder = ".") {
 
     } else if (m == "Simstrat") {
       ### Convert decimal days to yyyy-mm-dd HH:MM:SS
-      par_file <- file.path(folder, get_yaml_value(config_file, "config_files", "Simstrat"))
+      par_file <- file.path(folder, gotmtools::get_yaml_value(config_file, "config_files", "Simstrat"))
       timestep <- get_json_value(file.path(folder, par_file), "Simulation", "Timestep s")
       reference_year <- get_json_value(file.path(folder, par_file), "Simulation", "Start year")
       
