@@ -1,4 +1,9 @@
-
+#' Write yaml list to file
+#' 
+#' @name write_yaml
+#' @param yaml list; loaded using `configr::read.config()`
+#' @param file filepath; to file that is written
+#' @noRd
 
 write_yaml <- function(yaml, file) {
   

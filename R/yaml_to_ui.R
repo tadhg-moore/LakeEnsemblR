@@ -2,6 +2,7 @@
 #' 
 #' @name yaml_to_ui
 #' @inheritParams export_config
+#' @noRd
 #' 
 
 yaml_to_ui <- function(config_file) {
@@ -19,18 +20,18 @@ yaml_to_ui <- function(config_file) {
                   perl = TRUE)),
       if(v %in% c("location", "config_files", "inflows", "outflows", "output")) {
         lapply(seq_along(yaml[[v]]), \(m, i) {
-          div(style="display:inline-block;",
+          div(style = "display:inline-block;",
               create_ui(inputId = paste0(v, "_", m[i]), label = m[i], value = yaml[[v]][[m[i]]]))
         }, m = names(yaml[[v]]))
       } else if(v == "time") {
         lapply(seq_along(yaml[[v]]), \(m, i) {
-          div(style="display:inline-block;",
+          div(style = "display:inline-block;",
               create_ui(inputId = paste0(v, "_", m[i]), label = m[i], value = yaml[[v]][[m[i]]]))
         }, m = names(yaml[[v]]))
       } else if(v %in% c("observations")) {
         lapply(seq_along(yaml[[v]]), \(m, i) {
           lapply(seq_along(yaml[[v]][[m[i]]]), \(n, j) {
-            div(style="display:inline-block;", tags$em(m[i]),
+            div(style = "display:inline-block;", tags$em(m[i]),
                 create_ui(inputId = paste0(v, "_", m[i], "_", n[j]), label = n[j], value = yaml[[v]][[m[i]]][[n[j]]]))
           }, n = names(yaml[[v]][[m[i]]]))
         }, m = names(yaml[[v]]))
@@ -38,13 +39,13 @@ yaml_to_ui <- function(config_file) {
         lapply(seq_along(yaml[[v]]), \(m, i) {
           if(m[i] == "light") {
             lapply(seq_along(yaml[[v]][["light"]][["Kw"]]), \(n, j) {
-              div(style="display:inline-block;", tags$em(m[i]),
+              div(style = "display:inline-block;", tags$em(m[i]),
                   create_ui(inputId = paste0(v, "_", m[i], "_Kw_", n[j]), label = paste0(n[j], " Kw"),
                             value = yaml[[v]][["light"]][["Kw"]][[n[j]]]))
             }, n = names(yaml[[v]][["light"]][["Kw"]]))
           } else {
             lapply(seq_along(yaml[[v]][[m[i]]]), \(n, j) {
-              div(style="display:inline-block;", tags$em(m[i]),
+              div(style = "display:inline-block;", tags$em(m[i]),
                   create_ui(inputId = paste0(v, "_", m[i], "_", n[j]), label = n[j], value = yaml[[v]][[m[i]]][[n[j]]]))
             }, n = names(yaml[[v]][[m[i]]]))
           }
@@ -66,6 +67,13 @@ yaml_to_ui <- function(config_file) {
   # })
   
 }
+
+#' Get a vector of inputId names
+#' 
+#' @name get_ui_id
+#' @inheritParams export_config
+#' @noRd
+#' 
 
 get_ui_id <- function(config_file) {
   require(configr)
@@ -114,6 +122,7 @@ get_ui_id <- function(config_file) {
 
 #' Create UI widgets based on values passed
 #' @inheritParams shiny::textInput
+#' @noRd
 
 create_ui <- function(inputId, label, value) {
   
