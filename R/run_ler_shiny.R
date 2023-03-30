@@ -214,7 +214,17 @@ run_ler_shiny <- function(model, config_file) {
     
     # Render LER yaml file to UI elements ----
     output$ler_ui <- renderUI({
-      yaml_to_ui(config_file = config_file)
+      yaml_to_ui(yaml = lst$yaml)
+    })
+    
+    observeEvent(input$add_param, {
+      value <- input$add_param_value
+      if(!is.na(as.numeric(value))) {
+        value <- as.numeric(value) 
+      } else if(!is.na(as.logical(value))) {
+        value <- as.logical(value)
+      }
+      lst$yaml[["model_parameters"]][[input$add_param_model]][[input$add_param_name]] <- value
     })
     
     observeEvent(input$save_yaml, {

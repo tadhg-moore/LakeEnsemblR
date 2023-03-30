@@ -5,34 +5,55 @@
 #' @noRd
 #' 
 
-yaml_to_ui <- function(config_file) {
+yaml_to_ui <- function(yaml) {
   
   require(configr)
   require(shiny)
   
-  yaml <- configr::read.config(config_file)
+  # yaml <- configr::read.config(yaml)
   ler_sections <- c("location", "time", "config_files", "observations", "input",
-                    "inflows", "outflows", "output")
+                    "inflows", "outflows", "output", "scaling_factors",
+                    "model_parameters")
   ui_list <- lapply(ler_sections, function(v) {
+    section_name <- gsub("_", " ", v) %>% 
+      gsub("(^|[[:space:]])([[:alpha:]])", "\\1\\U\\2",
+                         .,
+                         perl = TRUE)
     tagList(
-      tags$h3(gsub("(^|[[:space:]])([[:alpha:]])", "\\1\\U\\2",    # Uppercase with Base R
-                  v,
-                  perl = TRUE)),
+      tags$h3(section_name),
       if(v %in% c("location", "config_files", "inflows", "outflows", "output")) {
         lapply(seq_along(yaml[[v]]), \(m, i) {
+          inputId <- paste0(v, "_", m[i])
+          value <- yaml[[v]][[m[i]]]
+          if(inputId == "output_variables") {
+            choices <- c("temp", "ice_height", "w_level", "q_sens", 
+                         "q_lat", "dens", "salt")
+          } else {
+            choices <- value
+          }
           div(style = "display:inline-block;",
-              create_ui(inputId = paste0(v, "_", m[i]), label = m[i], value = yaml[[v]][[m[i]]]))
+              create_ui(inputId = inputId, label = m[i], value = value,
+                        choices = choices))
         }, m = names(yaml[[v]]))
       } else if(v == "time") {
         lapply(seq_along(yaml[[v]]), \(m, i) {
           div(style = "display:inline-block;",
               create_ui(inputId = paste0(v, "_", m[i]), label = m[i], value = yaml[[v]][[m[i]]]))
         }, m = names(yaml[[v]]))
-      } else if(v %in% c("observations")) {
+      } else if(v %in% c("observations", "scaling_factors")) {
         lapply(seq_along(yaml[[v]]), \(m, i) {
           lapply(seq_along(yaml[[v]][[m[i]]]), \(n, j) {
+            inputId <- paste0(v, "_", m[i], "_", n[j])
+            value <- yaml[[v]][[m[i]]][[n[j]]]
+            if(inputId == "output_variables") {
+              choices <- c("temp", "ice_height", "w_level", "q_sens", 
+                           "q_lat", "dens", "salt")
+            } else {
+              choices <- value
+            }
             div(style = "display:inline-block;", tags$em(m[i]),
-                create_ui(inputId = paste0(v, "_", m[i], "_", n[j]), label = n[j], value = yaml[[v]][[m[i]]][[n[j]]]))
+                create_ui(inputId = inputId, label = n[j], value = value, 
+                          choices = choices))
           }, n = names(yaml[[v]][[m[i]]]))
         }, m = names(yaml[[v]]))
       } else if(v == "input") {
@@ -50,6 +71,36 @@ yaml_to_ui <- function(config_file) {
             }, n = names(yaml[[v]][[m[i]]]))
           }
         }, m = names(yaml[[v]]))
+      } else if(v == "model_parameters") {
+        list(
+          lapply(seq_along(yaml[[v]]), \(m, i) {
+            lapply(seq_along(yaml[[v]][[m[i]]]), \(n, j) {
+              inputId <- paste0(v, "_", m[i], "_", n[j])
+              value <- yaml[[v]][[m[i]]][[n[j]]]
+              div(style = "display:inline-block;", tags$em(m[i]),
+                  create_ui(inputId = inputId, label = n[j], value = value))
+            }, n = names(yaml[[v]][[m[i]]]))
+          }, m = names(yaml[[v]])),
+          tags$br(),
+          tags$h4("Add parameters"),
+          div(style = "display:inline-block;",
+              selectInput(inputId = "add_param_model", label = "Model", 
+                          choices = c("FLake", "GLM", "GOTM", "Simstrat",
+                                      "MyLake"), width = "100px")
+          ),
+          div(style = "display:inline-block;",
+              textInput(inputId = "add_param_name", label = "Parameter", 
+                        width = "75%")
+          ),
+          div(style = "display:inline-block;",
+              textInput(inputId = "add_param_value", label = "Value", 
+                        width = "50%")
+          ),
+          div(style = "display:inline-block;",
+              actionButton(inputId = "add_param", label = "",
+                       icon = icon("plus"))
+          )
+        )
       },
       tags$br()
     )
@@ -124,7 +175,7 @@ get_ui_id <- function(config_file) {
 #' @inheritParams shiny::textInput
 #' @noRd
 
-create_ui <- function(inputId, label, value) {
+create_ui <- function(inputId, label, value, choices = NULL) {
   
   require(lubridate)
   require(shinyTime)
@@ -136,7 +187,7 @@ create_ui <- function(inputId, label, value) {
     textInput(inputId = inputId, label = label, value = value)
   } else if (length(value) > 1) {
     # selectInput(inputId = inputId, label = label, choices = value, selected = value, multiple = TRUE)
-    selectizeInput(inputId = inputId, label = label, choices = value, selected = value, 
+    selectizeInput(inputId = inputId, label = label, choices = choices, selected = value, 
                    multiple = TRUE, options = list(create = TRUE,
                                   createOnBlur = TRUE))
   } else if(is.numeric(value)) {
@@ -153,7 +204,7 @@ create_ui <- function(inputId, label, value) {
   #   fileInput(inputId = inputId, label = label, multiple = FALSE, accept = ".csv", placeholder = value)
   } else if(is.character(value)) {
     textInput(inputId = inputId, label = label, value = value)
-  } else if(file.exists(value)) {
+  } else {
     textInput(inputId = inputId, label = label, value = value)
   }
 }
