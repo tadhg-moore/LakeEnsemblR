@@ -26,6 +26,6 @@ write_yaml <- function(yaml, file) {
     gsub("yes", "true", .) %>% 
     gsub("'NULL'", "NULL", .) %>% 
     gsub("~", "NULL", .) %>% 
-    paste0(., comments) %>% 
+    # paste0(., comments) %>% 
     writeLines(., file)
 }
