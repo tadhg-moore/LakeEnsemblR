@@ -2,8 +2,20 @@ pandoc: 3.1.11
 pkgdown: 2.1.1
 pkgdown_sha: ~
 articles:
-  LakeEnsemblR_vignette: LakeEnsemblR_vignette.html
-last_built: 2025-03-11T23:43Z
+  articles/Calibrating-LakeEnsemblR: Calibrating-LakeEnsemblR.html
+  articles/Docker: Docker.html
+  articles/FAQ: FAQ.html
+  articles/From-v1-0-to-v1-1-changes: From-v1-0-to-v1-1-changes.html
+  articles/Installation-issues: Installation-issues.html
+  articles/Lake-Models: Lake-Models.html
+  LakeEnsemblR: LakeEnsemblR.html
+  articles/Package-structure: Package-structure.html
+  articles/Post-processing-LakeEnsemblR: Post-processing-LakeEnsemblR.html
+  articles/Running-LakeEnsemblR-in-parallel: Running-LakeEnsemblR-in-parallel.html
+  articles/Running-LakeEnsemblR: Running-LakeEnsemblR.html
+  articles/Setting-up-LakeEnsemblR: Setting-up-LakeEnsemblR.html
+  articles/What-is-a-NetCDF-file: What-is-a-NetCDF-file.html
+last_built: 2025-03-12T00:40Z
 urls:
   reference: https://tadhg-moore.github.io/LakeEnsemblR/reference
   article: https://tadhg-moore.github.io/LakeEnsemblR/articles

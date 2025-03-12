@@ -32,11 +32,23 @@
 
     <div id="navbar" class="collapse navbar-collapse ms-3">
       <ul class="navbar-nav me-auto">
+<li class="nav-item"><a class="nav-link" href="articles/LakeEnsemblR.html">Get started</a></li>
 <li class="nav-item"><a class="nav-link" href="reference/index.html">Reference</a></li>
 <li class="nav-item dropdown">
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
   <ul class="dropdown-menu" aria-labelledby="dropdown-articles">
-<li><a class="dropdown-item" href="articles/LakeEnsemblR_vignette.html">R package LakeEnsemblR: Basic Use and Sample Applications</a></li>
+<li><a class="dropdown-item" href="articles/Calibrating-LakeEnsemblR.html">3. Calibrating LakeEnsemblR</a></li>
+    <li><a class="dropdown-item" href="articles/Docker.html">Docker</a></li>
+    <li><a class="dropdown-item" href="articles/FAQ.html">FAQ</a></li>
+    <li><a class="dropdown-item" href="articles/From-v1-0-to-v1-1-changes.html">From v1.0 to v1.1 changes</a></li>
+    <li><a class="dropdown-item" href="articles/Installation-issues.html">Installation issues</a></li>
+    <li><a class="dropdown-item" href="articles/Lake-Models.html">Lake Models</a></li>
+    <li><a class="dropdown-item" href="articles/Package-structure.html">Package structure</a></li>
+    <li><a class="dropdown-item" href="articles/Post-processing-LakeEnsemblR.html">Post-processing LakeEnsemblR</a></li>
+    <li><a class="dropdown-item" href="articles/Running-LakeEnsemblR-in-parallel.html">Running LakeEnsemblR in parallel</a></li>
+    <li><a class="dropdown-item" href="articles/Running-LakeEnsemblR.html">2. Running LakeEnsemblR</a></li>
+    <li><a class="dropdown-item" href="articles/Setting-up-LakeEnsemblR.html">1. Setting up LakeEnsemblR</a></li>
+    <li><a class="dropdown-item" href="articles/What-is-a-NetCDF-file.html">What is a NetCDF file</a></li>
   </ul>
 </li>
 <li class="nav-item"><a class="nav-link" href="news/index.html">Changelog</a></li>
@@ -141,7 +153,7 @@
 <span><span class="fu"><a href="reference/run_ensemble.html">run_ensemble</a></span><span class="op">(</span>config_file <span class="op">=</span> <span class="va">config_file</span>, model <span class="op">=</span> <span class="va">model</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] "Running MyLake from 01/01/10 to 01/01/11..."</span></span>
 <span><span class="co">#&gt;    user  system elapsed </span></span>
-<span><span class="co">#&gt;    3.28    0.61    8.93</span></span></code></pre></div>
+<span><span class="co">#&gt;    2.35    0.38    9.75</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="post-processing">Post-processing<a class="anchor" aria-label="anchor" href="#post-processing"></a>
@@ -169,7 +181,7 @@
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Change the theme and increase text size for saving</span></span>
 <span><span class="va">p1</span> <span class="op">&lt;-</span> <span class="va">p1</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_classic</a></span><span class="op">(</span>base_size <span class="op">=</span> <span class="fl">24</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_classic</a></span><span class="op">(</span>base_size <span class="op">=</span> <span class="fl">14</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_gradient.html" class="external-link">scale_colour_gradientn</a></span><span class="op">(</span>limits <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">21</span><span class="op">)</span>,</span>
 <span>                         colours <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rev.html" class="external-link">rev</a></span><span class="op">(</span><span class="fu">RColorBrewer</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/RColorBrewer/man/ColorBrewer.html" class="external-link">brewer.pal</a></span><span class="op">(</span><span class="fl">11</span>, <span class="st">"Spectral"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
@@ -275,7 +287,7 @@
 <li><p>“fork” this repository to your own personal github account</p></li>
 <li>
 <p>clone the github repository to your computer:</p>
-<p>$git clone <a href="mailto:git@github.com:%7Busername%7D/LakeEnsemblR.git" class="email">git@github.com:%7Busername%7D/LakeEnsemblR.git</a></p>
+<p>$git clone <a href="mailto:git@github.com:USER_NAME/LakeEnsemblR.git" class="email">git@github.com:USER_NAME/LakeEnsemblR.git</a></p>
 </li>
 <li><p>modify code or add new functionality, save the code</p></li>
 <li>
