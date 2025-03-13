@@ -2,20 +2,20 @@ pandoc: 3.1.11
 pkgdown: 2.1.1
 pkgdown_sha: ~
 articles:
-  articles/Calibrating-LakeEnsemblR: Calibrating-LakeEnsemblR.html
-  articles/Docker: Docker.html
-  articles/FAQ: FAQ.html
-  articles/From-v1-0-to-v1-1-changes: From-v1-0-to-v1-1-changes.html
-  articles/Installation-issues: Installation-issues.html
-  articles/Lake-Models: Lake-Models.html
-  LakeEnsemblR: LakeEnsemblR.html
-  articles/Package-structure: Package-structure.html
-  articles/Post-processing-LakeEnsemblR: Post-processing-LakeEnsemblR.html
-  articles/Running-LakeEnsemblR-in-parallel: Running-LakeEnsemblR-in-parallel.html
-  articles/Running-LakeEnsemblR: Running-LakeEnsemblR.html
-  articles/Setting-up-LakeEnsemblR: Setting-up-LakeEnsemblR.html
-  articles/What-is-a-NetCDF-file: What-is-a-NetCDF-file.html
-last_built: 2025-03-13T01:47Z
+  articles/calibrating-lakeensemblr: calibrating-lakeensemblr.html
+  articles/docker: docker.html
+  articles/faq: faq.html
+  articles/from-v1-0-to-v1-1-changes: from-v1-0-to-v1-1-changes.html
+  articles/installation-issues: installation-issues.html
+  articles/lake-models: lake-models.html
+  lakeensemblr-overview: lakeensemblr-overview.html
+  articles/package-structure: package-structure.html
+  articles/post-processing-lakeensemblr: post-processing-lakeensemblr.html
+  articles/running-lakeensemblr-in-parallel: running-lakeensemblr-in-parallel.html
+  articles/running-lakeensemblr: running-lakeensemblr.html
+  articles/setting-up-lakeensemblr: setting-up-lakeensemblr.html
+  articles/what-is-a-netcdf-file: what-is-a-netcdf-file.html
+last_built: 2025-03-13T03:21Z
 urls:
   reference: https://tadhg-moore.github.io/LakeEnsemblR/reference
   article: https://tadhg-moore.github.io/LakeEnsemblR/articles
