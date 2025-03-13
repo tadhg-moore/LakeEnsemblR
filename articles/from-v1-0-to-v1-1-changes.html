@@ -88,8 +88,8 @@
 
     
     
-<h2>
-Version 1.1
+<div class="section level2">
+<h2 id="version-1-1">Version 1.1<a class="anchor" aria-label="anchor" href="#version-1-1"></a>
 </h2>
 <p>In March 2022, we updated LakeEnsemblR to version 1.1. The main
 advantage of this new version is the possibility to use multiple inflows
@@ -112,12 +112,12 @@ provided in LakeEnsemblR, the model-specific packages, and at the
 “LER_examples Github page”:<a href="https://github.com/aemon-j/LER_examples" class="external-link uri">https://github.com/aemon-j/LER_examples</a>. The advice
 below is therefore mostly if you want to adapt your existing setup to
 v1.1.</p>
-<h3>
-Changes in the LakeEnsemblR configuration file
+<div class="section level3">
+<h3 id="changes-in-the-lakeensemblr-configuration-file">Changes in the LakeEnsemblR configuration file<a class="anchor" aria-label="anchor" href="#changes-in-the-lakeensemblr-configuration-file"></a>
 </h3>
-<h4>
-<em>inflows</em> and <em>outflows</em> sections
-</h4>
+<div class="section level5">
+<h5 id="inflows-and-outflows-sections">inflows and outflows sections<a class="anchor" aria-label="anchor" href="#inflows-and-outflows-sections"></a>
+</h5>
 <p>In v1.0, there was a single <em>inflows</em> section, but now inflows
 and outflows are split into two sections.</p>
 <ul>
@@ -136,27 +136,28 @@ outflows to use.</li>
 <li>“outflow_lvl” (<em>outflows</em>-only): The height of the outflows,
 relative to the deepest point in the lake. If the outflow is a surface
 outflow use “-1”. If there are more than one outflow in the outflow
-file, this must be a list with one value per outflow, e.g.:
-<pre><code><span>  <span class="va">outflow_lvl</span><span class="op">:</span></span>
-<span><span class="op">-</span> <span class="op">-</span><span class="fl">1</span></span>
-<span><span class="op">-</span> <span class="fl">10</span></span></code></pre>
-Inflows are always assumed to be surface inflows.</li>
-<li>“fix_wlvl” (<em>inflows</em>-only and optional): If set to “true”,
-the water level in GOTM will be fixed to the initial water level. This
-reproduces v1.0 behaviour. However, note that this means that the water
-balance is no longer correctly resolved in GOTM. If this argument is
-absent, it is assumed to be “false”</li>
+file, this must be a list with one value per outflow, e.g.:</li>
 </ul>
+<pre><code><span><span class="va">outflow_lvl</span><span class="op">:</span></span>
+<span>  <span class="op">-</span> <span class="op">-</span><span class="fl">1</span></span>
+<span>  <span class="op">-</span> <span class="fl">10</span></span></code></pre>
+<p>Inflows are always assumed to be surface inflows. * “fix_wlvl”
+(<em>inflows</em>-only and optional): If set to “true”, the water level
+in GOTM will be fixed to the initial water level. This reproduces v1.0
+behaviour. However, note that this means that the water balance is no
+longer correctly resolved in GOTM. If this argument is absent, it is
+assumed to be “false”</p>
 <p>Note that the “mass_balance” argument from v1.0 is no longer used. If
 you want to recreate the situation of v1.0 where inflow = outflow, you
 can just provide the same file name in the “file” argument of both the
 inflows and outflows section. Also the “scale_param” parameter from the
 v1.0 <em>inflows</em> section has been (re)moved (see next
 paragraph).</p>
-<h4>
-Inflow and outflow scaling factors
+</div>
+<div class="section level4">
+<h4 id="inflow-and-outflow-scaling-factors">Inflow and outflow scaling factors<a class="anchor" aria-label="anchor" href="#inflow-and-outflow-scaling-factors"></a>
 </h4>
-If you want to scale the discharge in your inflows or outflows (for
+<p>If you want to scale the discharge in your inflows or outflows (for
 example if your measured streamflow only accounts for part of the
 catchment runoff), you need to put this in the <em>scaling_factors</em>
 section. It’s important to note that you need to provide multiple
@@ -164,7 +165,7 @@ scaling factors if you have multiple inflows or outflows, in a
 list-format. As with other scaling factors, model-specific scaling
 factors overwrite generic (“all”) scaling factors. Here is an example
 for a reservoir with a single inflow and two outflows, in which the
-first (surface) outflow in Simstrat has a 10% higher discharge:
+first (surface) outflow in Simstrat has a 10% higher discharge:</p>
 <pre><code><span><span class="va">scaling_factors</span><span class="op">:</span></span>
 <span>   <span class="va">all</span><span class="op">:</span></span>
 <span>      <span class="va">inflow</span><span class="op">:</span> <span class="fl">1.0</span></span>
@@ -175,22 +176,25 @@ first (surface) outflow in Simstrat has a 10% higher discharge:
 <span>      <span class="va">outflow</span><span class="op">:</span></span>
 <span>      <span class="op">-</span> <span class="fl">1.1</span></span>
 <span>      <span class="op">-</span> <span class="fl">1.0</span></span></code></pre>
-<h4>
-The <em>output</em> section
+</div>
+<div class="section level4">
+<h4 id="the-output-section">The <strong>output</strong> section<a class="anchor" aria-label="anchor" href="#the-output-section"></a>
 </h4>
 <p>This section has remained largely the same, but with two small
 updates. The most important one is that “w_level” is now a potential
 output of the models, to be listed under “variables”. Note that for
 MyLake and FLake, this is set to <code>NA</code>, because these models
 do not simulate water level, although you can assume water level in
-these models to be equal to the model parameters <code>In.Z</code> and
-<code>depth_w_lk</code>, respectively.</p>
+these models to be equal to the model parameters <code>In.Z</code>
+and<code>depth_w_lk</code>, respectively.</p>
 <p>A second update is that you can provide “max_members”, which is the
 maximum number of members that you can add to the same netcdf file using
 the <code>add = TRUE</code> argument in <code><a href="../reference/run_ensemble.html">run_ensemble()</a></code>. If
 it is not provided, it is assumed to be 25.</p>
-<h3>
-Changes in the Simstrat configuration file
+</div>
+</div>
+<div class="section level3">
+<h3 id="changes-in-the-simstrat-configuration-file">Changes in the Simstrat configuration file<a class="anchor" aria-label="anchor" href="#changes-in-the-simstrat-configuration-file"></a>
 </h3>
 <p>A new version of Simstrat is being used (v3.0.1), which included some
 changes in the names of parameters. The easiest solution to this problem
@@ -200,8 +204,9 @@ want to make the changes manually: * p_albedo -&gt; p_sw_ice * p_sw
 -&gt; p_sw_water * InflowPlacement -&gt; InflowMode. However, also the
 options changed: Old 0 = New 1, Old 1 = New 2, New 0 = no inflows or
 outflows used.</p>
-<h3>
-How do the different models handle the water balance?
+</div>
+<div class="section level3">
+<h3 id="how-do-the-different-models-handle-the-water-balance">How do the different models handle the water balance?<a class="anchor" aria-label="anchor" href="#how-do-the-different-models-handle-the-water-balance"></a>
 </h3>
 <p>If you use inflows and outflows of different intensity and then look
 at the “w_level” output of LakeEnsemblR, you will probably notice that
@@ -209,31 +214,40 @@ each model handles the water balance differently. Here we quickly
 mention the differences. These differences are inherent to the models,
 and LakeEnsemblR does not attempt to standardise this. However, if you
 want to create a similar water level between the models, you could for
-example change the scaling factors of the inflow or the outflow. *
-FLake: There is no water balance, as only the heat transferred by the
-inflow is added to the model. w_level output is therefore “NA”. * GLM:
-water balance = delta-discharge + precipitation + evaporation +
-overflow∗ * GOTM∗∗: water balance = delta-discharge + precipitation +
-evaporation * Simstrat: water balance = delta-discharge + overflow∗ *
-MyLake: Outflow discharge is assumed to be equal to the inflow
+example change the scaling factors of the inflow or the outflow.</p>
+<ul>
+<li>FLake: There is no water balance, as only the heat transferred by
+the inflow is added to the model. w_level output is therefore “NA”.</li>
+<li>GLM: <strong>water balance = delta-discharge + precipitation +
+evaporation + overflow</strong>
+</li>
+<li>GOTM: <strong>water balance = delta-discharge + precipitation +
+evaporation</strong>
+</li>
+<li>Simstrat: <strong>water balance = delta-discharge +
+overflow</strong>
+</li>
+<li>MyLake: Outflow discharge is assumed to be equal to the inflow
 discharge, and no other flows are computed. w_level output is therefore
-“NA”.</p>
-<p>∗With “overflow” we mean that if the water level exceeds the highest
-level in the hypsograph, the excess water is removed from the model.
-∗∗In GOTM, there are also other options of computing the water balance,
+“NA”.</li>
+</ul>
+<p>With “overflow” we mean that if the water level exceeds the highest
+level in the hypsograph, the excess water is removed from the model.</p>
+<p>In GOTM, there are also other options of computing the water balance,
 for example by forcing the water level to a prescribed time series.
 These options are not supported by LakeEnsemblR, but can still be used
 by accessing the gotm.yaml file.</p>
-<h3>
-What if I want to keep working with v1.0?
+</div>
+<div class="section level3">
+<h3 id="what-if-i-want-to-keep-working-with-v1-0">What if I want to keep working with v1.0?<a class="anchor" aria-label="anchor" href="#what-if-i-want-to-keep-working-with-v1-0"></a>
 </h3>
-Perhaps you have already set up LakeEnsemblR v1.0 in your lake or
+<p>Perhaps you have already set up LakeEnsemblR v1.0 in your lake or
 reservoir, and you don’t want this update to affect your simulations.
 Because LakeEnsemblR and the model-specific packages have been attached
 to a specific “release” in GitHub, you can still install these old
 versions. These are the versions that are described in the publication
 Moore et al. (2021), and you will still be able to use your old
-workflow.
+workflow.</p>
 <pre><code><span><span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"aemon-j/LakeEnsemblR@v1.0.0"</span><span class="op">)</span></span>
 <span><span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"aemon-j/FLakeR@LakeEnsemblR_v1.0.0"</span><span class="op">)</span></span>
 <span><span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"aemon-j/GLM3r@LakeEnsemblR_v1.0.0"</span><span class="op">)</span></span>
@@ -247,6 +261,8 @@ packages, change your configuration file as described above, set the
 outflow file to the same file as the inflow file, and “fix_wlvl” to
 “true”. This should result in very similar behaviour compared to v1.0
 (although a later version of the Simstrat model will be used).</p>
+</div>
+</div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside>
 </div>
