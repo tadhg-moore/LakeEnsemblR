@@ -139,8 +139,12 @@ if everything is working: <code>gcc -v</code> and
 if you still experience library problems, you can continue installing
 the missing dependencies using ‘brew’”
 (e.g. <code>dyld: Library not loaded: /usr/local/opt/fontconfig/lib/libfontconfig.1.dylib</code>
--&gt; <code>brew install fontconfig</code>) ### Linux If you get error
-messages related to <code>shared libraries</code>,
+-&gt; <code>brew install fontconfig</code>)</p>
+</div>
+<div class="section level3">
+<h3 id="linux">Linux<a class="anchor" aria-label="anchor" href="#linux"></a>
+</h3>
+<p>If you get error messages related to <code>shared libraries</code>,
 <code>libnetcdf</code>, or similar, go to the directory where your
 installed R packages are stored. For GLM3r, GOTMr, FLakeR, and SimstratR
 you need to delete the <code>libm.so.6</code> file and for GLM3r you
@@ -152,8 +156,7 @@ need to copy the <code>libnetcdf.so.13</code> and two
 <div class="section level3">
 <h3 id="docker">Docker<a class="anchor" aria-label="anchor" href="#docker"></a>
 </h3>
-<p>You can also use docker to run LakeEnsemblr, see <a href="https://github.com/aemon-j/LakeEnsemblR/wiki/Docker" class="external-link">this wiki
-page</a>.</p>
+<p>You can also use docker to run LakeEnsemblr, see <a href="docs/articles/docker.html">this article</a>.</p>
 </div>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
